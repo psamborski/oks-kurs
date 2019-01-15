@@ -34,6 +34,6 @@ Then run the app on *localhost* (*Ubuntu*):
 $ python3 path/to/project/run.py
 ```
 ### Credits
-All rights deserved to Patryk Samborski &#169; 2019.
+All rights deserved to Patryk Samborski &#169; 2019. Nevertheless - get inspired :D
 
 I also recommend tutorials by [Corey Schafer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) - they helped a lot with my project! [(his Github)](https://github.com/CoreyMSchafer)
