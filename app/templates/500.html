@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Przepraszamy!{% endblock %}
+
+{% block content %}
+    <section class="error-page">
+		<div class="container section-container">
+			<div class="row">
+				<div class="col s12">
+                    <span class="far fa-sad-tear grey-text"></span>
+                    <h2>Ups! Wystąpił nieoczekiwany błąd.</h2>
+                    <p>Przejdź na <a href="{{ url_for('mainSite.index') }}">stronę główną</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

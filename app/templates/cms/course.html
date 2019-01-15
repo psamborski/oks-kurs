@@ -1,0 +1,150 @@
+{% extends "cms/cms-base.html" %}
+
+{% block title %}{{ course.name }}{% endblock %}
+
+{% block content %}
+	<section>
+		<div class="container section-container admin">
+            <div class="row">
+				<div class="col s12">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <div class="flash-messages">
+                               {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">
+                                        {% if category=='warning' %}
+                                            <span class="fas fa-exclamation-triangle"></span>
+                                        {% elif category=='success' %}
+                                            <span class="fas fa-check-circle"></span>
+                                        {% endif %}
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+
+            <h3 class="black-text section-header course-name-header">{{ course.name }}</h3>
+
+            <div class="course-actions">
+                <a href="{{ url_for('CMS.course_to_pdf', course_id=course.id, course_namestring='kurs_' + course.startDate.strftime('%d-%m-%Y')) }}" target="_blank">
+                    <span class="fas fa-file-pdf grey-text text-darken-2"></span>
+                </a>
+                <a href="{{ url_for('CMS.update_course', course_id=course.id) }}">
+                    <span class="fas fa-edit yellow-text text-darken-3"></span>
+                </a>
+                <a href="#delete-{{ course.id }}-modal" class="modal-trigger">
+                    <span class="fas fa-trash red-text text-darken-3"></span>
+                </a>
+            </div>
+
+			<div class="row white course-info-container">
+				<div class="col s12 l4">
+                    <h5 class="blue-text text-darken-3"><span class="far fa-calendar-alt"></span> Data rozpoczęcia:</h5>
+                    <p>
+                        {{ formatted_course_data.startDate }}, godz. {{ formatted_course_data.startTime }}
+                    </p>
+
+                    <h5 class="blue-text text-darken-3"><span class="far fa-calendar-alt"></span> Spotkanie organizacyjne:</h5>
+                    <p>
+                        {{ formatted_course_data.organizingMeetingDate }}, godz. {{ formatted_course_data.organizingMeetingTime }}
+                    </p>
+				</div>
+				<div class="col s12 l4">
+                    <h5 class="blue-text text-darken-3"><span class="fas fa-dollar-sign"></span> Koszt:</h5>
+                    <p>
+                        {{ course.cost }} zł
+                    </p>
+
+                    <h5 class="blue-text text-darken-3"><span class="fas fa-users"></span> Limit:</h5>
+                    <p>
+                        {% if course.studentLimit == 0 %}
+                            nie podano
+                        {% else %}
+                            {{ course.studentLimit }}
+                        {% endif %}
+                    </p>
+				</div>
+				<div class="col s12 l4 amount-of-students-box">
+                    <h4 class="blue-text text-darken-3">Liczba uczestników:</h4>
+                    <span>{{ students.total }}</span>
+				</div>
+			</div>
+
+            <div class="row white course-students-container">
+                <h4>Uczestnicy</h4>
+                <div class="students-table-box">
+                    <table>
+                        <tr>
+                            <th>Imię i nazwisko</th>
+                            <th>Telefon</th>
+                            <th>E-mail</th>
+                            <th>Adres</th>
+                            <th>Wiek</th>
+                        </tr>
+                        {% for student in students.items %}
+                            <tr>
+                                <td>{{ student.name }} {{ student.surname }}</td>
+                                <td>{{ student.phone }}</td>
+                                <td>{{ student.email }}</td>
+                                <td>{{ student.address }}</td>
+                                <td>{{ student.age }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+                <div class="col s12 pagination-container">
+                    <ul class="pagination">
+                        {% if students.has_prev %}
+                            <li class="waves-effect"><a href="{{ url_for('CMS.specific_course', course_id=course.id, strona=students.prev_num) }}"><i class="material-icons">chevron_left</i></a></li>
+                        {% else %}
+                            <li class="disabled"><a><i class="material-icons">chevron_left</i></a></li>
+                        {% endif %}
+                        {% for page_num in students.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                            {% if page_num %}
+                                {% if students.page == page_num %}
+                                    <li class="active blue darken-3">
+                                        <a href="{{ url_for('CMS.specific_course', course_id=course.id, strona=page_num) }}">{{ page_num }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="waves-effect">
+                                        <a href="{{ url_for('CMS.specific_course', course_id=course.id, strona=page_num) }}">{{ page_num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% else %}
+                                ...
+                            {% endif %}
+                        {% endfor %}
+                        {% if students.has_next %}
+                            <li class="waves-effect"><a href="{{ url_for('CMS.specific_course', course_id=course.id, strona=students.next_num) }}"><i class="material-icons">chevron_right</i></a></li>
+                        {% else %}
+                            <li class="disabled"><a><i class="material-icons">chevron_right</i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+		</div>
+	</section>
+
+    <div id="delete-{{ course.id }}-modal" class="modal">
+        <div class="modal-content">
+            <h5>Czy na pewno chcesz usunąć kurs {{ course.name }} i wszystkich jego uczestników?</h5>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="modal-close waves-effect btn-flat">ANULUJ</a>
+            <form action="{{ url_for('CMS.delete_course', course_id=course.id) }}" method="POST" class="right">
+                <button type="submit" class="waves-effect btn-flat red darken-3 white-text">USUŃ</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additionalScript %}
+    <script src="{{ url_for('static', filename='js/html2canvas.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/all-courses.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
+{% endblock %}

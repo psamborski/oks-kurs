@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block title %}Zapisz się na kurs{% endblock %}
+
+{% block content %}
+	<section>
+		<div class="container section-container">
+			<div class="row">
+				<div class="col s12 sign-up">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                <div class="flash-messages">
+                                   {% for category, message in messages %}
+                                        <div class="alert alert-{{ category }}">
+                                            {% if category=='warning' %}
+                                                <span class="fas fa-exclamation-triangle"></span>
+                                            {% elif category=='success' %}
+                                                <span class="fas fa-check-circle"></span>
+                                            {% elif category=='error' %}
+                                                <span class="fas fa-exclamation-circle"></span>
+                                            {% elif category=='info' %}
+                                                <span class="fas fa-info-circle"></span>
+                                            {% endif %}
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+					<h3 class="black-text section-header white-background">ZAPISZ SIĘ NA KURS</h3>
+
+                    <div class="sign-up-cta grey-background">
+                        <p>
+                            <a href="{{ url_for('mainSite.contact') }}">Skontaktuj się z nami</a> lub wybierz odpowiedni termin i skorzystaj z poniższego formularza, by zapisać się na kurs.
+                        </p>
+
+                        <div class="sign-up-cta-buttons">
+                            <a class="waves-effect waves-light btn yellow darken-2 white-text" href="{{ url_for('mainSite.pricing') }}">Cennik</a>
+                            <a class="waves-effect waves-light btn yellow darken-2 white-text modal-trigger" href="#sprawdzcozyskasz">Sprawdź, co zyskasz</a>
+                        </div>
+
+                        <span class="far fa-lightbulb lightbulb-bg"></span>
+                    </div>
+
+                    <form method="post" action="" id="sign-up-form" novalidate>
+                        {{ form.hidden_tag() }}
+                        {% if not courses %}
+                            <div class="course-banner no-courses">
+                                <div class="dates-container">
+                                    <div class="course-column">
+                                        <h4 class="light">Data kursu:</h4>
+                                        <span class="course-info yellow-text text-darken-2">--.--.--</span>
+                                        <div class="yellow-text text-darken-2 hours-place">
+                                            <span class="white-text">godz.</span> <span class="yellow-text text-darken-2">--:--</span>
+                                            <span class="white-text">/</span>
+                                            <a class="yellow-text text-darken-2" href="{{ url_for('mainSite.contact') }}">sprawdź, gdzie</a>
+                                        </div>
+                                    </div>
+                                    <div class="course-column">
+                                        <h5 class="white-text light">Spotkanie organizacyjne:</h5>
+                                        <span class="course-info-small yellow-text text-darken-2">--.--.--</span>
+                                        <div class="yellow-text text-darken-2 hours-place">
+                                            <span class="white-text">godz.</span> <span class="yellow-text text-darken-2">--:--</span> <span class="white-text">/</span> <a class="yellow-text text-darken-2" href="{{ url_for('mainSite.contact') }}">sprawdź, gdzie</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% else %}
+                            <fieldset class="courses-radio-container">
+                                {% for radio_course, course_data in courses %}
+                                    {{ radio_course(class="course-radio") }}
+                                    <div class="course-banner">
+                                        <div class="dates-container">
+                                            <div class="course-column">
+                                                <h4 class="light white-text">Początek kursu:</h4>
+                                                {{ radio_course.label(class="course-info yellow-text text-darken-2 course-date") }}
+                                                <span class="choose-course-cta white-text">(kliknij, aby wybrać ten kurs)</span>
+                                                <div class="yellow-text text-darken-2 hours-place">
+                                                    <span class="white-text">godz.</span> <span class="yellow-text text-darken-2">{{ course_data.startTime }}</span>
+                                                    <span class="white-text">/</span>
+                                                    <a class="yellow-text text-darken-2" href="{{ url_for('mainSite.contact') }}">sprawdź, gdzie</a>
+                                                </div>
+                                            </div>
+                                            <div class="course-column">
+                                                <h5 class="white-text light">Spotkanie organizacyjne:</h5>
+                                                <span class="course-info-small yellow-text text-darken-2">{{ course_data.organizingMeetingDate }}&nbsp;r.</span>
+                                                <div class="yellow-text text-darken-2 hours-place">
+                                                    <span class="white-text">godz.</span> <span class="yellow-text text-darken-2">{{ course_data.organizingMeetingTime }}</span> <span class="white-text">/</span> <a class="yellow-text text-darken-2" href="{{ url_for('mainSite.contact') }}">sprawdź, gdzie</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </fieldset>
+                        {% endif %}
+
+						<fieldset class="grey-background personal-info-form">
+							<legend class="col s12"><h5>FORMULARZ ZGŁOSZENIOWY (kurs: <span class="chosen-course-date"></span>)</h5></legend>
+							<p class="col s12">Zapisz się za pomocą poniższego formularza. Wkrótce do Ciebie oddzwonimy w celu potwierdzenia zgłoszenia.</p>
+                            {% for field in form if field.widget.input_type != 'hidden' and field.id not in ['age', 'recaptcha', 'data_agreement', 'courseId'] %}
+                                <div class="input-field col {% if field.id == 'city' or field.id == 'postal' %}s12 m6 l3{% else %}m12 l6{% endif %}">
+                                    {% if field.errors %}
+                                        {{ field() }}
+                                        {{ field.label() }}
+                                        {% for error in field.errors %}
+                                            <div class="alert-message">
+                                                <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                                <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                            </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        {{ field() }}
+                                        {{ field.label() }}
+                                        {% if field.flags.required %}
+                                            <span class="helper-text grey-text text-darken-2">pole obowiązkowe</span>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+
+							<div class="range-field col s12 age">
+                                {% if form.age.errors %}
+                                    {{ form.age.label() }}
+                                    {{ form.age() }}
+                                    {% for error in form.age.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.age.label() }}
+                                    {{ form.age() }}
+                                {% endif %}
+							</div>
+							<div class="col s12 l6 captcha">
+                                {% if form.recaptcha.errors %}
+                                    {{ form.recaptcha() }}
+                                    {% for error in form.recaptcha.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.recaptcha() }}
+                                {% endif %}
+							</div>
+							<div class="col s12 l6">
+								<div class="payment-info">
+									<h5>Płatność online</h5>
+									<div><span class="fas fa-money-check-alt blue-text text-darken-3"></span><span>44 1090 2688 0000 0001 3369 1139</span></div>
+									<div><span class="fas fa-user blue-text text-darken-3"></span><span>Tomasz Kobylas</span></div>
+								</div>
+							</div>
+
+							<div class="col s12">
+                                {% if form.data_agreement.errors %}
+                                    <p>
+                                        <label>
+                                            {{ form.data_agreement() }}
+                                            <span>Wyrażam zgodę na przetwarzanie moich danych osobowych.</span>
+                                        </label>
+                                    </p>
+                                    {% for error in form.data_agreement.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>
+                                        <label>
+                                            {{ form.data_agreement() }}
+                                            <span>Wyrażam zgodę na przetwarzanie moich danych osobowych.</span>
+                                        </label>
+                                    </p>
+                                {% endif %}
+							</div>
+                            <div class="col s12 submit-button">
+	                            <button type="submit" class="waves-effect waves-light btn blue darken-3">ZAREJESTRUJ SIĘ</button>
+                            </div>
+						</fieldset>
+                    </form>
+					
+			    </div>
+		    </div>
+		</div>
+	</section>
+
+    <!-- Modal #sprawdzcozyskasz -->
+    <div id="sprawdzcozyskasz" class="modal">
+        <div class="modal-content">
+		    <h4>Zapewniamy:</h4>
+
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <div class="icon">
+                            <span class="fas fa-chalkboard-teacher blue-text text-darken-3"></span>
+                        </div>
+                        <h5 class="center">Zajęcia teoretycznie<br>i praktyczne</h5>
+                        <p class="light">30 godzin lekcyjnych teorii i 30 godzin zegarowych jazd. Dysponujemy trzema klimatyzowanymi samochodami Skoda Fabia 1.2.</p>
+                    </div>
+                </div>
+
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <div class="icon">
+                            <span class="fas fa-user-md blue-text text-darken-3"></span>
+                        </div>
+                        <h5 class="center">Badania lekarskie na miejscu</h5>
+                        <p class="light">Koszt ustawowy wynosi 200 zł. Nasz ośrodek organizuje takie badania podczas spotkania organizacyjnego.</p>
+                    </div>
+                </div>
+
+                <div class="col s12 m4">
+                    <div class="icon-block">
+                        <div class="icon">
+                            <span class="fas fa-book blue-text text-darken-3"></span>
+                        </div>
+                        <h5 class="center">Materiały szkoleniowe</h5>
+                        <p class="light">Podręcznik, testy egzaminacyjne, trasy egzaminacyjne itp. GRATIS!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <a href="#" class="modal-close waves-effect waves-yellow btn-flat">Zamknij</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additionalScript %}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="{{ url_for('static', filename='js/sign-up.js') }}"></script>
+{% endblock %}

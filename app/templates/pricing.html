@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Cennik{% endblock %}
+
+{% block content %}
+    <section>
+		<div class="container section-container">
+			<div class="row">
+				<div class="col s12 pricing">
+					<h3 class="black-text section-header white-background">CENNIK</h3>
+					
+					<ul class="collapsible pricing-table">
+						<li {% if url_for(request.endpoint) != url_for('mainSite.pricing') %} class="active"{% endif %}>
+							<div class="collapsible-header pricing-table-header">
+								<div class="service-header">
+									<div>KURS <span class="yellow-text text-darken-2">KAT. B</span></div><span class="material-icons noselect">info_outline</span>
+								</div>
+								<div class="blue darken-3 service-price white-text">
+									<span class="dot">{{ current_price }} zł</span>
+								</div>								
+							</div>
+							
+							<div class="collapsible-body">
+								<div class="row">
+									<h4>Zapewniamy:</h4>
+			
+									<div class="col s12 m4">
+										<div class="icon-block">
+											<div class="icon">
+												<span class="fas fa-chalkboard-teacher blue-text text-darken-3"></span>
+											</div>
+											<h5 class="center">Zajęcia teoretycznie<br>i praktyczne</h5>
+											<p class="light">30 godzin lekcyjnych teorii i 30 godzin zegarowych jazd. Dysponujemy trzema klimatyzowanymi samochodami Skoda Fabia 1.2.</p>
+										</div>
+									</div>
+									
+									<div class="col s12 m4">
+										<div class="icon-block">
+											<div class="icon">
+												<span class="fas fa-user-md blue-text text-darken-3"></span>
+											</div>
+											<h5 class="center">Badania lekarskie na miejscu</h5>
+											<p class="light">Koszt ustawowy wynosi 200 zł. Nasz ośrodek organizuje takie badania podczas spotkania organizacyjnego.</p>
+										</div>
+									</div>
+
+									<div class="col s12 m4">
+										<div class="icon-block">
+											<div class="icon">
+												<span class="fas fa-book blue-text text-darken-3"></span>
+											</div>
+											<h5 class="center">Materiały szkoleniowe</h5>
+											<p class="light">Podręcznik, testy egzaminacyjne, trasy egzaminacyjne itp. GRATIS!</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="pricing-table-header">
+								<div class="service-header">
+									<div>JAZDA DOSZKALAJĄCA <span class="yellow-text text-darken-2">1H</span></div>
+								</div>
+								<div class="blue darken-2 service-price white-text">
+									<span class="double-dot">40/45 zł</span>
+								</div>								
+							</div>
+						</li>
+						<li>
+							<div class="pricing-table-header">
+								<div class="service-header">
+									<div>PAKIET JAZD</div>
+									<div class="price-flex-column">
+										<span class="yellow-text text-darken-2">10H</span>
+										<span class="yellow-text text-darken-2">20H</span>
+										<span class="yellow-text text-darken-2">30H</span>
+									</div>
+								</div>
+								<div class="blue darken-3 service-price white-text price-flex-column">
+									<span>380/430 zł</span>
+									<span>740/840 zł</span>
+									<span>1080/1230 zł</span>
+								</div>								
+							</div>
+						</li>
+					</ul>
+					
+					<div class="dot-info">
+						<span class="yellow-text text-darken-2 dot-description">•</span><span> - możliwość płatności w ratach; przy zgłoszeniach grupowych (min. 3 osoby), każdy uczestnik otrzymuje 1 godz. jazdy <strong>GRATIS</strong></span>
+						<br>
+						<span class="yellow-text text-darken-2 double-dot-description">••</span><span> - cena dla kursantów OSK Kurs/cena dla kursantów z innych ośrodków</span>
+					</div>
+			
+					<div class="payment-info">
+						<h4>Płatność online</h4>
+						<div><span class="fas fa-money-check-alt blue-text text-darken-3"></span><span>44 1090 2688 0000 0001 3369 1139</span></div>
+						<div><span class="fas fa-user blue-text text-darken-3"></span><span>Tomasz Kobylas</span></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block additionalScript %}<script src="{{ url_for('static', filename='js/pricing.js') }}"></script>{% endblock %}

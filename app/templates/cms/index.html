@@ -1,0 +1,44 @@
+{% extends "cms/cms-base.html" %}
+
+{% block title %}Strona główna{% endblock %}
+
+{% block content %}
+	<section>
+		<div class="container section-container admin">
+			<div class="row">
+				<div class="col s12">
+                    <h3 class="black-text section-header">Panel admina osk&#8209;kurs.pl</h3>
+
+                    <div class="actions-container flex-row">
+                        <a href="{{ url_for('CMS.add_course') }}" class="action teal darken-1 white-text">
+                            <span class="far fa-calendar-plus"></span>
+                            <span>Dodaj kurs</span>
+                        </a>
+
+                        {% if closest_course_id is none %}
+                            <div class="action grey lighten-2 white-text">
+                                <span class="fa fa-business-time"></span>
+                                <span>Nadchodzący kurs (brak)</span>
+                            </div>
+                        {% else %}
+                            <a href="{{ url_for('CMS.specific_course', course_id = closest_course_id) }}" class="action lime darken-1 white-text">
+                                <span class="fa fa-business-time"></span>
+                                <span>Nadchodzący kurs</span>
+                            </a>
+                        {% endif %}
+
+                        <a href="{{ url_for('CMS.all_courses') }}" class="action deep-purple white-text">
+                            <span class="fas fa-list-alt"></span>
+                            <span>Lista kursów</span>
+                        </a>
+
+                        <a href="{{ url_for('CMS.settings') }}" class="action light-blue darken-3 white-text">
+                            <span class="fas fa-wrench"></span>
+                            <span>Ustawienia</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</section>
+{% endblock %}

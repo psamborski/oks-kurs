@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}O nas{% endblock %}
+
+{% block content %}
+	<section>
+		<div class="container section-container">
+			<div class="row">
+				<div class="col s12 about">
+					<h3 class="black-text section-header white-background">O NAS</h3>
+
+                    <div class="about-text">
+                        <p class="black-text">Zwracamy uwagę na&nbsp;istotne kwestie bezpośrednio związane z&nbsp;prowadzeniem samochodu, które&nbsp;w&nbsp;późniejszej, już&nbsp;praktycznej nauce prowadzenia pojazdu, są&nbsp;niezwykle przydatne i&nbsp;pomagają w&nbsp;sposób bezproblemowy przejść przez&nbsp;pierwsze godziny szkolenia praktycznego.</p>
+
+                        <p class="black-text">Najważniejszym celem naszego ośrodka szkolenia jest&nbsp;takie wyszkolenie przyszłych kierowców, aby&nbsp;charakteryzowali&nbsp;się:</p>
+                        <ul class="browser-default">
+                            <li>umiejętnością właściwego zachowania się w&nbsp;każdej sytuacji drogowej,</li>
+                            <li>bardzo dobrą znajomością przepisów ruchu drogowego,</li>
+                            <li>umiejętnością udzielenia pierwszej pomocy,</li>
+                            <li>właściwą techniką i&nbsp;wysoką kulturą jazdy.</li>
+                        </ul>
+
+                        <p class="black-text">W&nbsp;związku ze&nbsp;zmianami przepisów OSK&nbsp;Kurs przeprowadza przed&nbsp;każdym rozpoczęciem nowego kursu spotkanie organizacyjne. <strong>Pomożemy&nbsp;Ci we&nbsp;wszystkim.</strong> Po&nbsp;zadeklarowaniu udziału w&nbsp;kursie pomagamy załatwić formalności -&nbsp;w&nbsp;tym badanie lekarskie na&nbsp;miejscu -&nbsp;oraz&nbsp;uzgadniamy sposób utworzenia Twojego profilu kandydata na&nbsp;kierowcę (PKK).</p>
+					</div>
+
+					<h4 class="about-header">Nasza kadra</h4>
+					
+					<div class="row">
+						<div class="col s12 m6 l4">
+							<div class="card">
+								<div class="card-image">
+									<img src="{{ url_for('static', filename='images/stuff/tk.jpg') }}">
+								</div>
+								<div class="card-content">
+									<span class="card-title center">Tomasz Kobylas</span>
+									<p class="center">założyciel / wykładowca / instruktor</p>
+
+								</div>
+							</div>
+						</div>
+						<div class="col s12 m6 l4">
+							<div class="card">
+								<div class="card-image">
+									<img src="{{ url_for('static', filename='images/nophoto.jpg') }}">
+								</div>
+								<div class="card-content">
+									<span class="card-title center">Paweł Bogacz</span>
+									<p class="center">instruktor</p>
+
+								</div>
+							</div>
+						</div>
+						<div class="col s12 m6 l4">
+							<div class="card">
+								<div class="card-image">
+									<img src="{{ url_for('static', filename='images/nophoto.jpg') }}">
+								</div>
+								<div class="card-content">
+									<span class="card-title center">Robert Paterski</span>
+									<p class="center">instruktor</p>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<h4 class="about-header">Galeria</h4>
+										
+					<div class="carousel carousel-slider about-gallery">
+						<div class="carousel-item"><img src="{{ url_for('static', filename='images/gallery/0.jpg') }}" class="materialboxed" width="100%"></div>
+						<div class="carousel-item"><img src="{{ url_for('static', filename='images/gallery/01.jpg') }}" class="materialboxed" width="100%"></div>
+						<div class="carousel-item"><img src="{{ url_for('static', filename='images/gallery/foto1.png') }}" class="materialboxed" width="100%"></div>
+						<div class="carousel-item"><img src="{{ url_for('static', filename='images/gallery/1.jpg') }}" class="materialboxed" width="100%"></div>
+						<div class="carousel-item"><img src="{{ url_for('static', filename='images/gallery/2.jpg') }}" class="materialboxed" width="100%"></div>
+						<div class="carousel-item"><img src="{{ url_for('static', filename='images/gallery/3.jpg') }}" class="materialboxed" width="100%"></div>
+						
+						<div class="carousel-prev carousel-nav gal-prev"><span class="fas fa-chevron-left blue-text text-darken-3"></span></div>
+						<div class="carousel-next carousel-nav gal-next"><span class="fas fa-chevron-right blue-text text-darken-3"></span></div>
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<section>
+		<div class="container section-container">
+			<div class="row">
+				<div class="col s12">
+					<div class="opinions">
+						<h3 class="black-text section-header white-background">OPINIE</h3>
+						
+						<div class="opinion carousel carousel-slider center white">
+							<div class="opinion-carousel-item carousel-item">
+								<div class="opinion-photo-container">
+									<img src="{{ url_for('static', filename='images/opinions/pg.jpg') }}" alt="Opinia - Paweł Grabarczuk" />
+								</div>
+								<h2>Paweł Grabarczuk</h2>
+								<span class="blue-grey-text text-darken-2">były kursant, student</span>
+								<blockquote>
+									Nie jestem urodzonym kierowcą. Pierwszy raz siadłem za kierownicą w czasie kursu w OSK Kurs. Nie było to dla mnie łatwe, jednak dzięki wspaniałym instruktorom z czasem było coraz lepiej. Bezproblemowe umawianie się na jazdy oraz możliwość dokupienia dodatkowych bardzo mi pomogły. Gorąco polecam!
+								</blockquote>
+							</div>
+							<div class="opinion-carousel-item carousel-item white">
+								<div class="opinion-photo-container">
+									<img src="{{ url_for('static', filename='images/opinions/sz.jpg') }}" alt="Opinia - Sylwia Zlot" />
+								</div>
+								<h2>Sylwia Zlot</h2>
+								<span class="blue-grey-text text-darken-2">była kursantka, studentka</span>
+								<blockquote>
+									Świetna szkoła! Profesjonalna nauka, fajne podejście do kursantów. Bardzo miło wspominam jazdy i instruktorów, którzy zwracali uwagę na wiele aspektów jazdy, dzięki czemu dobrze przygotowali mnie do egzaminu. Bardzo polecam <span style="font-style: normal; width: 22px; display: inline">😉</span>
+								</blockquote>
+							</div>
+							<div class="opinion-carousel-item carousel-item white">
+								<div class="opinion-photo-container">
+									<img src="{{ url_for('static', filename='images/opinions/ms.jpg') }}" alt="Opinia - Marta Samborska" />
+								</div>
+								<h2>Marta Samborska</h2>
+								<span class="blue-grey-text text-darken-2">mama dwójki byłych kursantów</span>
+								<blockquote>
+									W OSK Kurs uczyło się jeździć dwoje moich dzieci - syn (maturzysta) i córka (po studiach). Jetem o nie spokojna. Wiem, że są bezpiecznymi kierowcami i nie mam obaw, kiedy jadą na miasto, w dłuższą trasę lub gdy sama siedzę obok na miejscu pasażera. Duża w tym zasługa fajnych i kompetentnych instruktorów, których mogłam poznać.
+								</blockquote>
+							</div>
+							<div class="opinion-carousel-item carousel-item white">
+								<div class="opinion-photo-container">
+									<img src="{{ url_for('static', filename='images/opinions/pp.jpg') }}" alt="Opinia - Piotr Pawlak" />
+								</div>
+								<h2>Piotr Pawlak</h2>
+								<span class="blue-grey-text text-darken-2">były kursant, student</span>
+								<blockquote>
+									Polecam szkołę tę jazdy. Kurs był przeprowadzony w bardzo miłej atmosferze. Instruktorzy wykonują rzetelną, dobrą pracę. Zaliczyłem zarówno egzamin teoretyczny jak i praktyczny za pierwszym podejściem.
+								</blockquote>
+							</div>
+							<div class="opinion-carousel-item carousel-item white">
+								<div class="opinion-photo-container">
+									<img src="{{ url_for('static', filename='images/opinions/ao.jpg') }}" alt="Opinia - Agnieszka Ostańska" />
+								</div>
+								<h2>Agnieszka Ostańska</h2>
+								<span class="blue-grey-text text-darken-2">była kursantka, studentka</span>
+								<blockquote>
+									Kurs to wspaniały wybór dla wszystkich, którzy chcą być dobrymi i bezpiecznymi kierowcami. Zajęcia teoretyczne prowadzone są z dużym zaangażowaniem, dzięki czemu wiele się z nich zapamiętuje. Jazdy odbywają się w miłej atmosferze, a instruktorzy kierują nas na drogi najczęściej wybierane przez egzaminatorów, co zapewnia szybki sukces <span style="font-style: normal; width: 22px; display: inline">😉</span>  Dzięki "Kursowi" bycie kierowcą przestało przerażać, a stało się przyjemnością. <span style="font-style: normal; width: 22px; display: inline">😉</span>
+								</blockquote>
+							</div>
+							<div class="opinion-carousel-item carousel-item white">
+								<div class="opinion-photo-container">
+									<img src="{{ url_for('static', filename='images/opinions/mr.jpg') }}" alt="Opinia - Mateusz Romak" />
+								</div>
+								<h2>Mateusz Romak</h2>
+								<span class="blue-grey-text text-darken-2">była kursant, student</span>
+								<blockquote>
+									Dzięki Kursowi czuję się teraz pewnie za kierownicą. Duża w tym zasługa Tomka Kobylasa, z którym można pogadać, ale jest też wymagający. Nie miałem problemów z umówieniem się na jazdy - nawet, gdy nagle musiałem je odwołać, wszystko było ok i znajdowaliśmy inny termin.
+								</blockquote>
+							</div>
+						</div>
+						
+						<div class="carousel-prev carousel-nav op-prev"><span class="fas fa-chevron-left blue-text text-darken-3"></span></div>
+						<div class="carousel-next carousel-nav op-next"><span class="fas fa-chevron-right blue-text text-darken-3"></span></div>
+
+						<div class="center">
+							<a href="https://www.superprawojazdy.pl/osk-kurs-t-kobylas,8922.htm" target="_blank" class="btn-large waves-effect yellow darken-2 white-text section-button">WIĘCEJ OPINII<span class="fas fa-external-link-alt external-icon"></span></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block additionalScript %}<script src="{{ url_for('static', filename='js/about.js') }}"></script>{% endblock %}

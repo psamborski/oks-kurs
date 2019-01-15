@@ -1,0 +1,36 @@
+<p>
+    Witaj {{ student_data['name'] }},<br>
+    ten e-mail potwierdza Twoje zgłoszenie na kurs prawa jazdy kat. B rozpoczynający się {{ date }} w OSK Kurs.
+</p>
+<p>
+    Twoje dane:
+    <ul>
+        <li>Imię: {{ student_data['name'] }}</li>
+        <li>Nazwisko: {{ student_data['surname'] }}</li>
+        <li>Adres e-mail: {{ student_data['email'] }}</li>
+        <li>Telefon: {{ student_data['phone'] }}</li>
+        <li>Adres: {{ student_data['adress'] }}</li>
+        <li>Wiek: {{ student_data['age'] }}</li>
+    </ul>
+</p>
+<p>
+    W razie pytań prosimy o kontakt:
+    <ul>
+        <li>telefon: <a href="tel:666939100">666 939 100</a></li>
+        <li>e-mail: <a href="mailto:kontakt@osk-kurs.pl">kontakt@osk-kurs.pl</a></li>
+        <li><a href="http://osk-kurs.pl/kontakt">formularz kontaktowy</a></li>
+    </ul>
+</p>
+<p>
+    Pozdrawiamy!
+    <br>
+    OSK Kurs
+    <br>
+    <img src="http://osk-kurs.pl/static/images/logo.png" alt="OSK Kurs - logo" height="200px" />
+</p>
+<br>
+<br>
+<p>____________________________________</p>
+<small>
+    Wiadomość została wysłana z adresu noreply@osk-kurs.pl. Prosimy o nieodpowiadanie na tego maila.
+</small>

@@ -1,0 +1,40 @@
+<!doctype html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <link rel=stylesheet href="{{ url + url_for('static', filename='css/materialize.css') }}" />
+    {# TODO improve style (margin) #}
+</head>
+<body>
+    <h5><b>Kurs:</b> {{ course.name }}</h5>
+    <p>
+        <b>Czas rozpoczęcia:</b><br>
+        {{ formatted_course.startDate }}, godz. {{ formatted_course.startTime }}
+        <br>
+        <b>Spotkanie organizacyjne:</b><br>
+        {{ formatted_course.organizingMeetingDate }}, godz. {{ formatted_course.organizingMeetingTime }}
+        <br>
+        <b>Liczba uczestników:</b><br>
+        {{ students_counter }}{% if course.studentLimit %}/{{ course.studentLimit }}{% endif %}
+        <br>
+        <br>
+        <h6><b>Uczestnicy:</b></h6>
+    </p>
+    <table>
+        <tr>
+            <th>Imię i nazwisko</th>
+            <th>Telefon</th>
+            <th>E-mail</th>
+            <th>Adres</th>
+            <th>Wiek</th>
+        </tr>
+        {% for student in students %}
+            <tr>
+                <td>{{ student.name }} {{ student.surname }}</td>
+                <td>{{ student.phone }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.address }}</td>
+                <td>{{ student.age }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>

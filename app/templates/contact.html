@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Kontakt{% endblock %}
+
+{% block content %}
+	<section>
+		<div class="container section-container">
+			<div class="row">
+				<div class="col s12 contact">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <div class="flash-messages">
+                               {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">
+                                        {% if category=='warning' %}
+                                            <span class="fas fa-exclamation-triangle"></span>
+                                        {% elif category=='success' %}
+                                            <span class="fas fa-check-circle"></span>
+                                        {% endif %}
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+
+					<h3 class="black-text section-header white-background">KONTAKT</h3>
+
+					<div class="contact-elems-container">
+						<div class="contact-item">
+							<a href="mailto:biuro@osk-kurs.pl" class="contact-icon-container circle blue darken-3">
+								<span class="fa fa-envelope white-text"></span>
+							</a>
+							
+							<div class="contact-data-container light">
+								<a href="mailto:biuro@osk-kurs.pl" class="black-text">biuro@osk-kurs.pl</a>
+							</div>
+						</div>
+						<div class="contact-item">
+							<div class="contact-icon-container circle blue darken-3">
+								<span class="fa fa-map-marker-alt white-text"></span>
+							</div>
+							
+							<div class="contact-data-container light">
+								biuro: ul. Racławicka 32/118
+								<br>wykłady: ul. Okulickiego 13, s. 38
+								<br>21-040 Świdnik
+							</div>
+						</div>
+						<div class="contact-item">
+							<a href="tel:666939100" class="contact-icon-container circle blue darken-3">
+								<span class="fa fa-phone white-text"></span>
+							</a>
+							<div class="contact-data-container light">								
+								<a href="tel:666939100" class="black-text">666 939 100</a>
+							</div>
+						</div>
+					</div>					
+				</div>
+			</div>
+			
+			<div class="contact-form-map-container row">
+				<div class="col m12 l6">
+					<div id="map-wrapper">
+						<div id="map-canvas" class="mapping"></div>
+					</div>
+				</div>
+				<div class="col m12 l6">
+					<form method="post" action="" id="contact-form" novalidate>
+                        {{ form.hidden_tag() }}
+						<fieldset>
+							<legend class="col s12"><h5>WYŚLIJ DO NAS WIADOMOŚĆ</h5></legend>
+							<div class="input-field col s12">
+                                {{ form.email.label() }}
+                                {% if form.email.errors %}
+                                    {{ form.email() }}
+                                    {% for error in form.email.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.email() }}
+                                {% endif %}
+							</div>
+							<div class="input-field col s12">
+								{{ form.topic.label() }}
+                                {% if form.topic.errors %}
+                                    {{ form.topic() }}
+                                    {% for error in form.topic.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.topic() }}
+                                {% endif %}
+							</div>
+							<div class="input-field col s12">
+                                {% if form.message.errors %}
+                                {{ form.message(class="materialize-textarea", form="contact-form", **{'data-length':'1024'}) }}
+                                    {% for error in form.message.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.message(class="materialize-textarea", form="contact-form", **{'data-length':'1024'}) }}
+                                {% endif %}
+                                {{ form.message.label() }}
+							</div>
+							
+							<div class="col s12">
+								<button type="submit" class="waves-effect waves-light btn blue darken-3">WYŚLIJ</button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block additionalScript %}<script src="{{ url_for('static', filename='js/contact.js') }}"></script>{% endblock %}

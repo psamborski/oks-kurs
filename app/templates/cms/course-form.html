@@ -1,0 +1,170 @@
+{% extends "cms/cms-base.html" %}
+
+{% block title %}
+    {% if action == 'add' %}
+        Dodaj kurs
+    {% elif action == 'edit' %}
+        Edytuj {{ form.name.data }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+	<section>
+		<div class="container section-container">
+			<div class="row">
+				<div class="col s12">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <div class="flash-messages">
+                               {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">
+                                        {% if category=='warning' %}
+                                            <span class="fas fa-exclamation-triangle"></span>
+                                        {% elif category=='success' %}
+                                            <span class="fas fa-check-circle"></span>
+                                        {% endif %}
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+
+            <h3 class="black-text section-header">
+                {% if action == 'add' %}
+                    Dodaj kurs
+                {% elif action == 'edit' %}
+                    Edytuj {{ form.name.data }}
+                {% endif %}
+            </h3>
+
+			<div class="row">
+				<div class="col s12 white">
+					<form method="post" action="" id="add-course-form" novalidate>
+                        {{ form.hidden_tag() }}
+						<fieldset>
+							<div class="input-field col s12">
+                                {% if form.name.errors %}
+                                    {{ form.name() }}
+                                        {% if action == 'add' %}
+                                            {{ form.name.label() }}
+                                        {% elif action == 'edit' %}
+                                            {{ form.name.label(class="active") }}
+                                        {% endif %}
+                                    {% for error in form.name.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.name() }}
+                                    {% if action == 'add' %}
+                                        {{ form.name.label() }}
+                                    {% elif action == 'edit' %}
+                                        {{ form.name.label(class="active") }}
+                                    {% endif %}
+                                {% endif %}
+							</div>
+							<div class="input-field col s8 m4">
+                                {{ form.organizing_meeting_date.label(class="active") }}
+                                {% if form.organizing_meeting_date.errors %}
+                                    {{ form.organizing_meeting_date(class="datepicker") }}
+                                    {% for error in form.organizing_meeting_date.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.organizing_meeting_date(class="datepicker") }}
+                                {% endif %}
+							</div>
+							<div class="input-field col s4 m2">
+                                {% if form.organizing_meeting_time.errors %}
+                                    {{ form.organizing_meeting_time(class="timepicker") }}
+                                    {% for error in form.organizing_meeting_time.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.organizing_meeting_time(class="timepicker") }}
+                                {% endif %}
+							</div>
+							<div class="input-field col s8 m4">
+								{{ form.start_date.label(class="active") }}
+                                {% if form.start_date.errors %}
+                                    {{ form.start_date(class="datepicker") }}
+                                    {% for error in form.start_date.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.start_date(class="datepicker") }}
+                                {% endif %}
+							</div>
+							<div class="input-field col s4 m2">
+                                {% if form.start_time.errors %}
+                                    {{ form.start_time(class="timepicker") }}
+                                    {% for error in form.start_time.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.start_time(class="timepicker") }}
+                                {% endif %}
+							</div>
+							<div class="input-field col s12 m6">
+                                {{ form.cost.label(class="active") }}
+                                {% if form.cost.errors %}
+                                {{ form.cost(min="0", step="25") }}
+                                    {% for error in form.cost.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.cost(min="0", step="25") }}
+                                {% endif %}
+							</div>
+							<div class="input-field col s12 m6">
+                                {{ form.limit.label(class="active") }}
+                                {% if form.limit.errors %}
+                                {{ form.limit(min="0") }}
+                                    {% for error in form.limit.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.limit(min="0", max="100") }}
+                                {% endif %}
+                                <span class="helper-text">to pole może zostać puste</span>
+							</div>
+							
+							<div class="col s12">
+								<button type="submit" class="waves-effect waves-light btn blue darken-3">
+                                    {% if action == 'add' %}
+                                        DODAJ KURS
+                                    {% elif action == 'edit' %}
+                                        AKTUALIZUJ KURS
+                                    {% endif %}
+                                </button>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

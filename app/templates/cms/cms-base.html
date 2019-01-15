@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+    <head>
+        <title>{% block title %}{% endblock %} | OSK Kurs Admin</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <!-- images/favicon SECTION -->
+            <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='images/favicon/apple-icon-57x57.png') }}">
+            <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename='images/favicon/apple-icon-60x60.png') }}">
+            <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='images/favicon/apple-icon-72x72.png') }}">
+            <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='images/favicon/apple-icon-76x76.png') }}">
+            <link rel="apple-touch-icon" sizes="114x114" href="{{ url_for('static', filename='images/favicon/apple-icon-114x114.png') }}">
+            <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='images/favicon/apple-icon-120x120.png') }}">
+            <link rel="apple-touch-icon" sizes="144x144" href="{{ url_for('static', filename='images/favicon/apple-icon-144x144.png') }}">
+            <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='images/favicon/apple-icon-152x152.png') }}">
+            <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/favicon/apple-icon-180x180.png') }}">
+            <link rel="icon" type="image/png" sizes="192x192"   href="{{ url_for('static', filename='images/favicon/android-icon-192x192.png') }}">
+            <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon/images/favicon-32x32.png') }}">
+            <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/favicon/images/favicon-96x96.png') }}">
+            <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon/images/favicon-16x16.png') }}">
+            <link rel="manifest" href="{{ url_for('static', filename='images/favicon/manifest.json') }}">
+            <meta name="msapplication-TileColor" content="#1565c0">
+            <meta name="msapplication-TileImage" content="{{ url_for('static', filename='images/favicon/ms-icon-144x144.png') }}">
+            <meta name="theme-color" content="#fbc02d">
+            <!-- END images/favicon SECTION -->
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link href="{{ url_for('static', filename='css/materialize.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="{{ url_for('static', filename='css/basic.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="{{ url_for('static', filename='css/cms.css') }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    </head>
+
+    <body class="grey lighten-4">
+        <nav class="blue darken-3 cms">
+            <div class="nav-wrapper container">
+                <a href="{{ url_for('CMS.index') }}" class="brand-logo"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="OSK Kurs - Logo" /> <span class="fas fa-wrench"></span></a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('CMS.index') }}">Panel administratora</a></li>
+                        <li><a href="{{ url_for('mainSite.index') }}">Powrót do strony</a></li>
+                        <li><a href="{{ url_for('CMS.logout') }}">Wyloguj</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('mainSite.index') }}">Powrót do strony</a></li>
+                        <li><a href="{{ url_for('CMS.login') }}">Zaloguj</a></li>
+                    {% endif %}
+                </ul>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger white-text"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+
+        <ul class="sidenav" id="mobile-demo">
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('CMS.index') }}">Panel administratora</a></li>
+                <li><a href="{{ url_for('mainSite.index') }}">Powrót do strony</a></li>
+                <li><a href="{{ url_for('CMS.logout') }}">Wyloguj</a></li>
+            {% else %}
+                <li><a href="{{ url_for('mainSite.index') }}">Powrót do strony</a></li>
+                <li><a href="{{ url_for('CMS.login') }}">Zaloguj</a></li>
+            {% endif %}
+        </ul>
+
+            {% block content %}{% endblock %}
+
+        <footer class="page-footer grey lighten-4">
+            <div class="footer-copyright blue-grey darken-3">
+                <div class="container">
+                OSK Kurs &copy; 2018
+                </div>
+            </div>
+        </footer>
+
+        <!--	Scripts-->
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/init.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/datetime-picker.js') }}"></script>
+        {% block additionalScript %}{% endblock %}
+    </body>
+</html>

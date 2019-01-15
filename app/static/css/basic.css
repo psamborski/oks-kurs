@@ -1,0 +1,254 @@
+/* BASIC */
+html, body {
+	max-width: 100%;
+    font-size: 16px !important;
+}
+
+strong {
+	font-weight: 700;
+}
+
+.white-text{
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.grey-background {
+	background-color: #f9f9f9;
+}
+
+.nav-content {
+	height: 52px;
+}
+
+.nav-list-wrapper, .nav-list-wrapper * {
+	height: 100%;
+	line-height: 52px;
+}
+
+.nav-list-wrapper li:hover {
+	border-bottom: 2px solid #fdd835;
+}
+
+.nav-list-wrapper a:hover {
+	color: #fdd835;
+}
+
+nav.main-page ul li a {
+	padding: 0 22px;
+	display: block !important;}
+
+@media only screen and (min-width: 992px) {
+	.nav-wrapper.main-page {
+		height: 118px !important;
+		line-height: 118px !important;
+	}
+}
+
+@media only screen and (max-width: 993px) {
+	.nav-content {
+		display: none;
+	}
+}
+
+.brand-logo {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	max-width: 100%;
+}
+
+.brand-logo img {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+@media only screen and (max-width: 993px) {
+	.nav-content {
+		display: none;
+	}
+}
+
+.header-info {
+	line-height: 2em !important;
+	font-size: 1.1em;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 118px;
+	margin-left: 25px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .header-info {
+        font-size: 0.9em;
+    }
+}
+
+.user-view {
+	padding-bottom: 16px !important;
+}
+
+.mobile-header-info {
+	line-height: 2em !important;
+	font-size: 1.1em;
+	margin-left: 20px;
+}
+
+.mobile-header-info .fa {
+	width: 20px;
+	text-align: center;
+}
+
+.header-address {
+	line-height: 1.2em !important;
+	font-size: 0.9em;
+}
+
+.header-cta {
+	font-weight: 600;
+}
+
+.header-cta span:first-child {
+	margin-right: 6px;
+}
+
+.footer-logo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.footer-logo .brand-logo {
+	max-width: 420px;
+}
+
+.page-footer li span {
+	margin-right: 7px;
+}
+
+.page-footer li .fa, .page-footer li .fab {
+	width: 15px;
+	text-align: center;
+}
+
+@media only screen and (max-width: 1200px) {
+	.footer-contact {
+		font-size: 0.9em;
+	}
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+}
+
+.flex-row .fa {
+	line-height: 2em;
+}
+
+/* FORM */
+
+label.active {
+	color: #1565c0 !important;
+}
+
+input:not(.browser-default):not([type="range"]):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+	border-bottom: 1px solid #1565c0 !important;
+	box-shadow: 0 1px 0 0 #1565c0 !important;
+}
+
+/* range */
+input[type=range]::-webkit-slider-thumb {
+	background-color: #1565c0;
+}
+input[type=range]::-moz-range-thumb {
+	background-color: #1565c0;
+	}
+input[type=range]::-ms-thumb {
+	background-color: #1565c0;
+}
+
+input[type=range] + .thumb {
+	background-color: #1565c0;
+}
+
+input[type="checkbox"]:checked + span:not(.lever)::before {
+	border-right: 2px solid #1565c0;
+	border-bottom: 2px solid #1565c0;
+}
+
+fieldset {
+	border: none;
+}
+
+.noselect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+.helper-text {
+	display: inline-block !important;
+}
+
+/*pickers*/
+input.timepicker {
+    text-align: center;
+}
+
+.datepicker-date-display, .timepicker-digital-display, .timepicker-tick.active, .timepicker-tick:focus { background-color: #1565c0; }
+.datepicker-day-button:focus, .timepicker-tick:hover { background-color: rgba(21, 101, 192, 0.53) !important; }
+.datepicker-table td.is-selected { background-color: #1565c0;}
+.datepicker-footer *, .timepicker-footer *, .datepicker-table td.is-today, .dropdown-content li > a, .dropdown-content li > span { color: #1565c0 !important;}
+.datepicker-table td.is-selected { color: #fff !important;}
+.timepicker-canvas line { stroke: #1565c0 !important; }
+.timepicker-canvas-bearing, .timepicker-canvas-bg { fill: #1565c0 !important; }
+
+/* FLASH MESSAGES */
+.flash-messages {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.alert {
+	width: 100%;
+	padding: 2em;
+    margin-bottom: 2em;
+}
+
+.alert-success {
+	background-color: rgba(83, 190, 96, 0.08);
+	color: rgb(51, 104, 52);
+}
+
+.alert-warning {
+	background-color: #f8f3d6;
+	color: #8d713a;
+}
+
+.alert-error {
+	background-color: rgba(248, 157, 159, 0.25);
+	color: #67051a;
+}
+
+.alert-info {
+	background-color: rgba(64, 121, 255, 0.08);
+	color: #143286;
+}
+
+
+/* ERROR PAGE */
+.error-page {
+	text-align: center;
+	padding: 3em 0;
+}
+
+.error-page span {
+	font-size: 12em;
+	width: 100%;
+}
