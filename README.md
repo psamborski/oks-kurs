@@ -4,8 +4,8 @@ Soon you'll have the possibility to see it on http://osk-kurs.pl/ ;)
 
 ### Some features
   - signing up for a course with an e-mail notification system
-  - CMS with creating, editing, deleting courses and exporting them to PDF
-  - editing and updating some basic data included by main website
+  - CMS with creating, editing and deleting courses and exporting them to PDF
+  - editing and updating some basic data included in main website
 
 ### Tech
 
