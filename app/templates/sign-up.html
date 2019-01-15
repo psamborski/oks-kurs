@@ -45,7 +45,7 @@
                     <form method="post" action="" id="sign-up-form" novalidate>
                         {{ form.hidden_tag() }}
                         {% if not courses %}
-                            <div class="course-banner no-courses">
+                            <div class="course-card no-courses">
                                 <div class="dates-container">
                                     <div class="course-column">
                                         <h4 class="light">Data kursu:</h4>
@@ -70,7 +70,7 @@
                             <fieldset class="courses-radio-container">
                                 {% for radio_course, course_data in courses %}
                                     {{ radio_course(class="course-radio") }}
-                                    <div class="course-banner">
+                                    <div class="course-card">
                                         <div class="dates-container">
                                             <div class="course-column">
                                                 <h4 class="light white-text">Początek kursu:</h4>

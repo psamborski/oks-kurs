@@ -62,8 +62,7 @@ def settings():
         user.email = form.email.data
         db.session.commit()
 
-        flash('Zaktualizowano adres e-mail.', 'success')
-        # flash(f'Zaktualizowano adres e-mail.', 'success') 3.6
+        flash(f'Zaktualizowano adres e-mail.', 'success')
 
     elif request.method == 'POST' and not form.validate_on_submit():
         flash('Niepoprawny adres e-mail.', 'warning')
@@ -98,7 +97,8 @@ def add_course():
             startDate=form.start_date.data,
             startTime=form.start_time.data,
             cost=form.cost.data,
-            studentLimit=form.limit.data
+            studentLimit=form.limit.data,
+            additionalData=form.additionalData.data
         )
 
         db.session.add(course)
@@ -131,6 +131,7 @@ def update_course(course_id):
         course.organizingMeetingTime = form.organizing_meeting_time.data
         course.studentLimit = form.limit.data
         course.cost = form.cost.data
+        course.additionalData = form.additionalData.data
 
         db.session.commit()
 
@@ -151,6 +152,7 @@ def update_course(course_id):
         form.organizing_meeting_time.data = course.organizingMeetingTime
         form.limit.data = course.studentLimit
         form.cost.data = course.cost
+        form.additionalData.data = course.additionalData
 
         return render_template('cms/course-form.html', form=form, action='edit')
 

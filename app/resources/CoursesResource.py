@@ -11,6 +11,7 @@ class Courses(db.Model):
     startTime = db.Column(db.Time, nullable=False)
     studentLimit = db.Column(db.Integer, nullable=True)
     cost = db.Column(db.Integer, nullable=False, default=1400)
+    additionalData = db.Column(db.String(120), nullable=True)
     students = db.relationship('Students', backref='course', lazy=True)
 
     def __repr__(self):

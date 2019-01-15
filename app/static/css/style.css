@@ -307,7 +307,7 @@ blockquote {
 }
 
 /*checked banner*/
-.course-radio:checked + .course-banner, .no-courses {
+.course-radio:checked + .course-card, .no-courses {
 	width: 100%;
 	padding: 5em !important;
 	display: flex !important;
@@ -325,47 +325,47 @@ blockquote {
 	flex-direction: column;
 }
 
-.course-radio:checked + .course-banner:after,
-.course-banner.no-courses:after {
+.course-radio:checked + .course-card:after,
+.course-card.no-courses:after {
 	display: none;
 }
 
-.course-banner, .course-radio:checked + .course-banner * {
+.course-card, .course-radio:checked + .course-card * {
 	transition-duration: .3s;
 }
 
-.course-radio:checked + .course-banner h5, .no-courses.course-banner h5,
-.course-radio:checked + .course-banner .hours-place, .no-courses .hours-place,
-.course-radio:checked + .course-banner .hours-place, .no-courses .hours-place,
-.course-radio:checked + .course-banner .course-info-small, .no-courses .course-info-small {
+.course-radio:checked + .course-card h5, .no-courses.course-card h5,
+.course-radio:checked + .course-card .hours-place, .no-courses .hours-place,
+.course-radio:checked + .course-card .hours-place, .no-courses .hours-place,
+.course-radio:checked + .course-card .course-info-small, .no-courses .course-info-small {
 	display: initial;
 	transform: scale(1);
 	-webkit-transform: scale(1);
 }
 
-.course-radio:checked + .course-banner .dates-container, .no-courses .dates-container {
+.course-radio:checked + .course-card .dates-container, .no-courses .dates-container {
 	margin-right: 3em;
 	display: flex;
 	flex-direction: column;
 }
 
-.course-radio:checked + .course-banner h4, .no-courses.course-banner h4 {
+.course-radio:checked + .course-card h4, .no-courses.course-card h4 {
 	margin: 0 !important;
 	font-size: 2rem;
 	color: #fff !important;
 	text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
-.course-radio:checked + .course-banner .dates-container h5, .no-courses .dates-container h5 {
+.course-radio:checked + .course-card .dates-container h5, .no-courses .dates-container h5 {
 	margin: 1em 0 0 0 !important;
 }
 
-.course-radio:checked + .course-banner .course-info, .no-courses .course-info {
+.course-radio:checked + .course-card .course-info, .no-courses .course-info {
 	font-size: 4em;
 	z-index: auto;
 }
 
-.course-radio:checked + .course-banner .choose-course-cta {
+.course-radio:checked + .course-card .choose-course-cta {
 	display: none;
 }
 
@@ -378,33 +378,33 @@ blockquote {
 }
 
 @media only screen and (max-width: 700px){
-	.course-radio:checked + .course-banner, .course-banner, .no-courses {
+	.course-radio:checked + .course-card, .course-card, .no-courses {
 		padding: 2em !important;
 	}
 	
-	.course-radio:checked + .course-banner .course-info, .no-courses .course-info {
+	.course-radio:checked + .course-card .course-info, .no-courses .course-info {
 		font-size: 2.6em !important;
 	}
 
-	.course-radio:checked + .course-banner .dates-container, .no-courses .dates-container {
+	.course-radio:checked + .course-card .dates-container, .no-courses .dates-container {
 		margin-right: 0;
 	}
 }
 
 @media only screen and (max-width: 420px){
-	.course-radio:checked + .course-banner .course-info,
-	.course-radio:checked + .course-banner .course-info-small,
+	.course-radio:checked + .course-card .course-info,
+	.course-radio:checked + .course-card .course-info-small,
 	.no-courses .course-info {
 		font-size: 1.8em !important;
 	}
 
-	.course-banner h4, .course-banner h5 {
+	.course-card h4, .course-card h5 {
 		font-size: 1.5em !important;
 	}
 }
 
 
-.course-banner h5,
+.course-card h5,
 .hours-place,
 .course-info-small {
 	display: none;
@@ -414,7 +414,7 @@ blockquote {
 	-webkit-transform-origin: 0 0;
 }
 
-.course-banner label:after {
+.course-card label:after {
 	position: absolute;
 	content: '\A';
 	width: 100%;
@@ -425,13 +425,13 @@ blockquote {
 	cursor: pointer;
 }
 
-.course-radio:checked + .course-banner label:after {
+.course-radio:checked + .course-card label:after {
 	cursor: auto;
 	z-index: 0;
 }
 
 /*unchecked banner*/
-.course-banner {
+.course-card {
 	width: 100%;
 	display: block;
 	padding: 2em 5em;
@@ -442,7 +442,7 @@ blockquote {
 	background-size: cover;
 }
 
-.course-banner:after {
+.course-card:after {
 	display: block;
 	content: '\A';
 	width: 100%;
@@ -454,11 +454,11 @@ blockquote {
 	background-color: rgba(255, 255, 255, 0.18);
 }
 
-.course-banner:hover:after {
+.course-card:hover:after {
 	background-color: rgba(255, 255, 255, 0.05);
 }
 
-.course-banner h4 {
+.course-card h4 {
 	font-size: 1.6em;
 	margin: 0;
 	z-index: 1;

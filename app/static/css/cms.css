@@ -185,6 +185,10 @@
     margin: 0.5em 0 0.5em 0.5em;
 }
 
+.course-additional-data h5 {
+    margin-top: 0;
+}
+
 .students-table-box {
     overflow: auto;
     padding: 0.8em;

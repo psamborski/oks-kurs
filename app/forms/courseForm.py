@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from flask_wtf import FlaskForm
-from wtforms import DateField, TimeField, StringField
+from wtforms import DateField, TimeField, StringField, TextAreaField
 from wtforms.fields.html5 import IntegerField
 from wtforms.validators import DataRequired, Optional, NumberRange, Length
 
@@ -40,10 +40,15 @@ class CourseForm(FlaskForm):
                          default=0,
                          validators=[
                              Optional(),
-                             NumberRange(min=0, message=('Wprowadzona liczba nie jest poprawna.'))
+                             NumberRange(min=0, message='Wprowadzona liczba nie jest poprawna.')
                          ])
     cost = IntegerField(label='Koszt', default='1400',
                         validators=[
                             DataRequired(message='Wprowadzona cena nie jest poprawna.'),
-                            NumberRange(min=0, message=('Podana wartość nie jest liczbą'))
+                            NumberRange(min=0, message='Podana wartość nie jest liczbą')
                         ])
+    additionalData = TextAreaField(label='Dodatkowe informacje widoczne przy kursie (np. inny koszt, inne miejsce itd.)',
+                                   validators=[
+                                       Optional(),
+                                       Length(max=120, message='Test jest za długi (120 znaków).')
+                                   ])

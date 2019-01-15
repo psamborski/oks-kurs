@@ -151,6 +151,30 @@
                                 {% endif %}
                                 <span class="helper-text">to pole może zostać puste</span>
 							</div>
+
+                            <div class="input-field col s12">
+                                {% if form.additionalData.errors %}
+                                    {{ form.additionalData(class="materialize-textarea", form="add-course-form", **{'data-length':'240'}) }}
+                                        {% if action == 'add' %}
+                                            {{ form.additionalData.label() }}
+                                        {% elif action == 'edit' %}
+                                            {{ form.additionalData.label(class="active") }}
+                                        {% endif %}
+                                    {% for error in form.additionalData.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.additionalData(class="materialize-textarea", form="add-course-form", **{'data-length':'120'}) }}
+                                    {% if action == 'add' %}
+                                        {{ form.additionalData.label() }}
+                                    {% elif action == 'edit' %}
+                                        {{ form.additionalData.label(class="active") }}
+                                    {% endif %}
+                                {% endif %}
+							</div>
 							
 							<div class="col s12">
 								<button type="submit" class="waves-effect waves-light btn blue darken-3">

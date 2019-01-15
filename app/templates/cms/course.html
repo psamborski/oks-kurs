@@ -71,6 +71,14 @@
                     <h4 class="blue-text text-darken-3">Liczba uczestników:</h4>
                     <span>{{ students.total }}</span>
 				</div>
+                <div class="col s12 course-additional-data">
+                    <h5 class="blue-text text-darken-3"><span class="fas fa-info"></span> Dodatkowe informacje:</h5>
+                    {% if not course.additionalData %}
+                            <p>brak</p>
+                    {% else %}
+                            <p>{{ course.additionalData }}</p>
+                    {% endif %}
+                </div>
 			</div>
 
             <div class="row white course-students-container">
