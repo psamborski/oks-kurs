@@ -209,7 +209,7 @@ def course_to_pdf(course_id, course_namestring):
                            formatted_course=formatted_course,
                            students=students,
                            students_counter=students_len,
-                           url=request.url_root[:-1]
+                           url=request.url_root[:-1]  # url needed to build style file link (without "/" at the end)
                            )
 
     pdf = pdfkit.from_string(html, False)

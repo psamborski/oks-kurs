@@ -54,7 +54,8 @@ def reformat_course(courses):
                         'startTime': reformat_time(course.startTime),
                         'organizingMeetingTime': reformat_time(course.organizingMeetingTime),
                         'studentLimit': course.studentLimit,
-                        'studentCount': len(get_students_by_course(course.id))
+                        'studentCount': len(get_students_by_course(course.id)),
+                        'additionalData': course.additionalData
                     }
                 )
 

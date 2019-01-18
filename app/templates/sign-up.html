@@ -44,49 +44,41 @@
 
                     <form method="post" action="" id="sign-up-form" novalidate>
                         {{ form.hidden_tag() }}
+                    {% if form.courseId.errors %}
+                                    {% for error in form.courseId.errors %}
+                    {% endfor %}
+                    {% endif %}
                         {% if not courses %}
-                            <div class="course-card no-courses">
-                                <div class="dates-container">
-                                    <div class="course-column">
-                                        <h4 class="light">Data kursu:</h4>
-                                        <span class="course-info yellow-text text-darken-2">--.--.--</span>
-                                        <div class="yellow-text text-darken-2 hours-place">
-                                            <span class="white-text">godz.</span> <span class="yellow-text text-darken-2">--:--</span>
-                                            <span class="white-text">/</span>
-                                            <a class="yellow-text text-darken-2" href="{{ url_for('mainSite.contact') }}">sprawdź, gdzie</a>
-                                        </div>
-                                    </div>
-                                    <div class="course-column">
-                                        <h5 class="white-text light">Spotkanie organizacyjne:</h5>
-                                        <span class="course-info-small yellow-text text-darken-2">--.--.--</span>
-                                        <div class="yellow-text text-darken-2 hours-place">
-                                            <span class="white-text">godz.</span> <span class="yellow-text text-darken-2">--:--</span> <span class="white-text">/</span> <a class="yellow-text text-darken-2" href="{{ url_for('mainSite.contact') }}">sprawdź, gdzie</a>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="container sorry-no-courses">
+                                <h4 class="center-align"><span class="blue-text text-darken-3">Przepraszamy!</span> Obecnie&nbsp;żaden kurs nie&nbsp;jest&nbsp;planowany. Wróć&nbsp;do&nbsp;nas za kilka dni.</h4>
                             </div>
-
                         {% else %}
                             <fieldset class="courses-radio-container">
                                 {% for radio_course, course_data in courses %}
-                                    {{ radio_course(class="course-radio") }}
-                                    <div class="course-card">
-                                        <div class="dates-container">
-                                            <div class="course-column">
-                                                <h4 class="light white-text">Początek kursu:</h4>
-                                                {{ radio_course.label(class="course-info yellow-text text-darken-2 course-date") }}
-                                                <span class="choose-course-cta white-text">(kliknij, aby wybrać ten kurs)</span>
-                                                <div class="yellow-text text-darken-2 hours-place">
-                                                    <span class="white-text">godz.</span> <span class="yellow-text text-darken-2">{{ course_data.startTime }}</span>
-                                                    <span class="white-text">/</span>
-                                                    <a class="yellow-text text-darken-2" href="{{ url_for('mainSite.contact') }}">sprawdź, gdzie</a>
+                                    {{ radio_course(class="radio-course") }}
+                                    <div class="col s12 l6">
+                                        <div class="card-panel">
+                                            <span class="fas fa-car"></span>
+                                            <span class="fas fa-check-circle"></span>
+                                            <div class="course-card">
+                                                <h5 class="light">Początek kursu:</h5>
+                                                <div class="course-date-hour">
+                                                    {{ radio_course.label(class="course-date") }}<span>, godz.&nbsp;{{ course_data.startTime }}</span>
+                                                    <span class="course-place">ul. Okulickiego 13 (I LO), s. 38</span>
                                                 </div>
-                                            </div>
-                                            <div class="course-column">
-                                                <h5 class="white-text light">Spotkanie organizacyjne:</h5>
-                                                <span class="course-info-small yellow-text text-darken-2">{{ course_data.organizingMeetingDate }}&nbsp;r.</span>
-                                                <div class="yellow-text text-darken-2 hours-place">
-                                                    <span class="white-text">godz.</span> <span class="yellow-text text-darken-2">{{ course_data.organizingMeetingTime }}</span> <span class="white-text">/</span> <a class="yellow-text text-darken-2" href="{{ url_for('mainSite.contact') }}">sprawdź, gdzie</a>
+                                                <h5 class="light">Spotkanie organizacyjne</h5>
+                                                <h6>(z badaniami lekarskimi):</h6>
+                                                <div class="course-date-hour">
+                                                    <span>{{ course_data.organizingMeetingDate }}&nbsp;r., godz.&nbsp;{{ course_data.organizingMeetingTime }}</span>
+                                                    <span class="course-place">ul. Okulickiego 13 (I LO), s. 38</span>
+                                                </div>
+                                                <div class="additional-data">
+                                                    <h5 class="light">Dodatkowe informacje:</h5>
+                                                    {% if course_data.additionalData %}
+                                                        <span>{{ course_data.additionalData }}</span>
+                                                    {% else %}
+                                                        <span>brak</span>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -183,7 +175,7 @@
                             </div>
 						</fieldset>
                     </form>
-					
+
 			    </div>
 		    </div>
 		</div>

@@ -42,19 +42,12 @@ def sign_up():
     three_closest_courses = get_three_future_courses()
     reformatted_courses = []
 
-    if not three_closest_courses and request.method != 'POST':
-        flash('Obecnie żaden kurs nie jest zaplanowany. Odwiedź nas za kilka dni!', 'info')
-    elif three_closest_courses:
+    if three_closest_courses:
         reformatted_courses = zip(form.courseId, reformat_course(three_closest_courses))
-        # It zips all necessary course data witch form radio options.
+        # It zips all necessary course data with form radio options.
         # form.courseId - list of three radio inputs with closest courses
 
     if request.method == 'POST' and form.validate_on_submit():
-        if three_closest_courses is None:
-            flash('Przepraszamy! Obecnie żaden kurs nie jest zaplanowany. Odwiedź naszą stronę za kilka dni.', 'error')
-
-            return render_template('sign-up.html', form=form, courses=reformatted_courses)
-
         if not validate_student_limit(form.courseId.data):
             flash('Przepraszamy! Nie ma już miejsc na ten kurs.', 'error')
 
@@ -83,12 +76,18 @@ def sign_up():
 
         return redirect(url_for('mainSite.sign_up'))
 
+    elif request.method == 'POST' and not reformatted_courses:
+        flash('Przepraszamy! Obecnie żaden kurs nie jest planowany.', 'warning')
+
+        return render_template('sign-up.html', form=form, courses=reformatted_courses)
+
     elif request.method == 'POST' and not form.validate_on_submit():
+
         flash('Formularz nie został wypełniony poprawnie.', 'warning')
 
         return render_template('sign-up.html', form=form, courses=reformatted_courses)
 
-    return render_template('sign-up.html', form=form, courses=reformatted_courses)  # TODO delete amount of students
+    return render_template('sign-up.html', form=form, courses=reformatted_courses)
 
 
 @mainSite.route('/kontakt', methods=['POST', 'GET'])

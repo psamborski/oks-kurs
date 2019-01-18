@@ -47,7 +47,7 @@ class CourseForm(FlaskForm):
                             DataRequired(message='Wprowadzona cena nie jest poprawna.'),
                             NumberRange(min=0, message='Podana wartość nie jest liczbą')
                         ])
-    additionalData = TextAreaField(label='Dodatkowe informacje widoczne przy kursie (np. inny koszt, inne miejsce itd.)',
+    additionalData = TextAreaField(label='Dodatkowe informacje widoczne przy kursie (np. inny koszt itd.)',
                                    validators=[
                                        Optional(),
                                        Length(max=120, message='Test jest za długi (120 znaków).')

@@ -7,7 +7,12 @@ from app.models.functions import prepare_courses_for_radio
 
 
 class SignUpForm(FlaskForm):
-    courseId = RadioField(label='Kurs')
+    courseId = RadioField(label='Kurs', coerce=int,
+                          # https://stackoverflow.com/questions/13964152/not-a-valid-choice-for-dynamic-select-field-wtforms
+                          validators=[
+                              DataRequired()
+                          ]
+                          )
     name = StringField(label='Imię',
                        validators=[
                            DataRequired(message='To pole nie może być puste.'),
