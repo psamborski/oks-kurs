@@ -1,17 +1,15 @@
 (function($){
   $(function(){
 
-    $('.parallax').parallax();
-	
 	$('.carousel').carousel({
 		fullWidth: true,
 		indicators: true
 	});
 	
-	$('.materialboxed').materialbox({
-		onOpenStart: (function(){$('.carousel-item.active').css({ 'z-index': '1000' }); }),
-		onCloseEnd: (function(){$('.carousel-item.active').css({ 'z-index': '0' }); }),
-	});
+	// $('.materialboxed').materialbox({
+	// 	onOpenStart: (function(){$('.carousel-item.active').css({ 'z-index': '1000' }); }),
+	// 	onCloseEnd: (function(){$('.carousel-item.active').css({ 'z-index': '0' }); }),
+	// });
 	
 	// function for next slide
 	$('.op-next').click(function(){
@@ -39,7 +37,7 @@
 	
   }); // end of document ready
   
-  	// height of carousel
+  	// height of opinion carousel
 	function carouselHeight() {
 		var $highest_name = 0;
 		var $highest_opinion = 0;

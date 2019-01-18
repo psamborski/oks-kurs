@@ -1,6 +1,6 @@
 import datetime
 
-from app.resources.CoursesResource import Courses, get_course_by_id, get_three_future_courses
+from app.resources.CoursesResource import Courses, get_course_by_id, get_four_future_courses
 from app.resources.StudentsResource import Students  # it makes CoursesResource work (db relationship)
 from app.resources.StudentsResource import get_students_by_course
 
@@ -69,7 +69,7 @@ def prepare_courses_for_radio():
     :return: Courses list.
     """
 
-    three_closest_courses = get_three_future_courses()
+    three_closest_courses = get_four_future_courses()
     radio_courses = []
 
     for course in three_closest_courses:

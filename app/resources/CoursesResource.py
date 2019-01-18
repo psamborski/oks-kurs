@@ -32,7 +32,7 @@ def get_current_course():
     return current_course
 
 
-def get_three_future_courses():
+def get_four_future_courses():
     """
     Get three planned courses.
     :return: Courses data.
@@ -42,7 +42,7 @@ def get_three_future_courses():
     courses = Courses.query. \
         filter(Courses.startDate > current_date). \
         order_by(Courses.startDate.asc()). \
-        limit(3).\
+        limit(4).\
         all()
 
     return courses

@@ -5,9 +5,9 @@ from app.forms.contactForm import ContactForm
 from app.forms.signUpForm import SignUpForm
 from app.models.MailModel import Mail
 from app.models.StudentModel import Student
-from app.models.functions import reformat_date, reformat_course, validate_student_limit, prepare_courses_for_radio
+from app.models.functions import reformat_date, reformat_course, validate_student_limit
 # database
-from app.resources.CoursesResource import get_current_course, get_three_future_courses, get_course_by_id
+from app.resources.CoursesResource import get_current_course, get_four_future_courses, get_course_by_id
 from app.resources.StudentsResource import Students
 
 mainSite = Blueprint('mainSite', __name__)
@@ -39,13 +39,13 @@ def sign_up():
     form = SignUpForm(courseId='21').update_form()
     # See update_form method in SignUpForm class for explanation
 
-    three_closest_courses = get_three_future_courses()
+    four_closest_courses = get_four_future_courses()
     reformatted_courses = []
 
-    if three_closest_courses:
-        reformatted_courses = zip(form.courseId, reformat_course(three_closest_courses))
+    if four_closest_courses:
+        reformatted_courses = zip(form.courseId, reformat_course(four_closest_courses))
         # It zips all necessary course data with form radio options.
-        # form.courseId - list of three radio inputs with closest courses
+        # form.courseId - list of four radio inputs with closest courses
 
     if request.method == 'POST' and form.validate_on_submit():
         if not validate_student_limit(form.courseId.data):
@@ -56,10 +56,18 @@ def sign_up():
         student_data = Student(form).handle_form()
         student = Students(**student_data)
 
-        db.session.add(student)
-        db.session.commit()
-
         course_date = reformat_date(get_course_by_id(form.courseId.data).startDate)
+
+        db.session.add(student)
+        try:
+            db.session.commit()
+        except Exception as e:
+            flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
+            mail = Mail('Błąd - OSK Kurs', 'Błąd przy rejestracji na kurs ' + course_date + ': ' + str(e),
+                        'psambek@gmail.com')
+            mail.send()
+
+            return render_template('sign-up.html', form=form, courses=reformatted_courses)
 
         confirm_topic = 'Potwierdzenie zgłoszenia'
         notification_topic = 'Zgłoszenie na kurs: ' + \

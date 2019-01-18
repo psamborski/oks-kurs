@@ -8,6 +8,7 @@ from app.forms.courseForm import CourseForm
 # database
 from app.forms.loginForm import LoginForm
 from app.forms.userForm import UserForm
+from app.models.MailModel import Mail
 from app.models.functions import reformat_date, reformat_course
 from app.resources.StudentsResource import get_students_by_course, delete_students_by_course
 from app.resources.CoursesResource import Courses, get_course_by_id, get_current_course, get_all_courses
@@ -60,7 +61,15 @@ def settings():
 
     if request.method == 'POST' and form.validate_on_submit():
         user.email = form.email.data
-        db.session.commit()
+        try:
+            db.session.commit()
+        except Exception as e:
+            flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
+            mail = Mail('Błąd - OSK Kurs', 'Błąd przy zmienie e-maila: ' + str(e),
+                        'psambek@gmail.com')
+            mail.send()
+
+            return render_template('cms/settings.html', form=form, user=user)
 
         flash(f'Zaktualizowano adres e-mail.', 'success')
 
@@ -102,7 +111,15 @@ def add_course():
         )
 
         db.session.add(course)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except Exception as e:
+            flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
+            mail = Mail('Błąd - OSK Kurs', 'Błąd przy tworzeniu kursu: ' + str(e),
+                        'psambek@gmail.com')
+            mail.send()
+
+            return render_template('cms/course-form.html', form=form, action='add')
 
         flash('Utworzono nowy kurs.', 'success')
 
@@ -133,7 +150,15 @@ def update_course(course_id):
         course.cost = form.cost.data
         course.additionalData = form.additionalData.data
 
-        db.session.commit()
+        try:
+            db.session.commit()
+        except Exception as e:
+            flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
+            mail = Mail('Błąd - OSK Kurs', 'Błąd przy edycji kursu: ' + str(e),
+                        'psambek@gmail.com')
+            mail.send()
+
+            return render_template('cms/course-form.html', form=form, action='edit')
 
         flash('Zaktualizowano kurs.', 'success')
 
@@ -165,8 +190,17 @@ def delete_course(course_id):
     course = get_course_by_id(course_id)
 
     delete_students_by_course(course_id)
-    db.session.delete(course)
-    db.session.commit()
+
+    try:
+        db.session.delete(course)
+        db.session.commit()
+    except Exception as e:
+        flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
+        mail = Mail('Błąd - OSK Kurs', 'Błąd przy usuwaniu kursu: ' + str(e),
+                    'psambek@gmail.com')
+        mail.send()
+
+        return redirect(url_for('CMS.all_courses'))
 
     # deleting multiple rows can be quicker with engine
     # https://stackoverflow.com/questions/39773560/sqlalchemy-how-do-you-delete-multiple-rows-without-querying
