@@ -39,13 +39,14 @@
   
   	// height of opinion carousel
 	function carouselHeight() {
-		var $highest_name = 0;
-		var $highest_opinion = 0;
-		$check = $('.carousel-item').first().height();
-		$('.opinion-carousel-item').each(function() {
-			
-			$name = $(this).find('h2').outerHeight();
-			$opinion = $(this).find('blockquote').outerHeight();
+		let $highest_name = 0;
+		let $highest_opinion = 0;
+		let $opinion_carousel_item =  $('.opinion-carousel-item');
+		// let $check = $opinion_carousel_item.first().height();
+		$opinion_carousel_item.each(function() {
+
+			let $name = $(this).find('h2').outerHeight();
+			let $opinion = $(this).find('blockquote').outerHeight();
 
 			if ( $name > $highest_name ) {
 				$highest_name = $name;
@@ -55,7 +56,7 @@
 			}
 		});
 
-		var $new_height = 300 + $highest_name + $highest_opinion;
+		let $new_height = 300 + $highest_name + $highest_opinion;
 		$('.opinion.carousel').attr('style', 'min-height: ' + $new_height + 'px !important');
 	}
 	
