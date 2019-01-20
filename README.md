@@ -24,7 +24,7 @@ Firsty, create somewhere your virtual environment for this project [check this o
 $ python3 -m venv /path/to/new/virtual/environment
 $ source  [path]/venv/bin/activate
 ```
-Then, using *pip*, install ald dependencies from included file [check this out](https://stackoverflow.com/questions/7225900/how-to-install-packages-using-pip-according-to-the-requirements-txt-file-from-a):
+Then, using *pip*, install all dependencies from included file [check this out](https://stackoverflow.com/questions/7225900/how-to-install-packages-using-pip-according-to-the-requirements-txt-file-from-a):
 ```sh
 $ pip install -r /path/to/requirements.txt
 ```
@@ -36,4 +36,4 @@ $ python3 path/to/project/run.py
 ### Credits
 All rights deserved to Patryk Samborski &#169; 2019. Nevertheless - get inspired :D
 
-I also recommend tutorials by [Corey Schafer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) - they helped a lot with my project! [(his Github)](https://github.com/CoreyMSchafer)
+I also recommend tutorials by [Corey Schafer](https://www.youtube.com/channel/UCCezIgC97PvUuR4_gbFUs5g) - they helped me a lot while doing my project! [(his Github)](https://github.com/CoreyMSchafer)
