@@ -20,13 +20,13 @@ class Mail:
 
         # Check if recipient is given and if so - check if the type is correct. Otherwise, set to default.
         if recipients is None:
-            recipients = [get_admin_mail]
+            recipients = [get_admin_mail()]
             # recipients = ["psambek@osk-kurs.pl"]
         elif type(recipients) is not list:
             if type(recipients) is str:
                 recipients = [recipients]
             else:
-                recipients = [get_admin_mail]
+                recipients = [get_admin_mail()]
                 # recipients = ["psambek@osk-kurs.pl"]
 
         self.topic = topic

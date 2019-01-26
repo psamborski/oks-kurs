@@ -75,10 +75,10 @@ def sign_up():
                              student_data['surname'] + ' (kurs: ' + \
                              course_date + ')'
         confirm_mail = Mail(confirm_topic, (form, course_date), student_data['email'], mail_type='confirm')
-        notification__mail = Mail(notification_topic, (form, course_date), mail_type='notification')
+        notification_mail = Mail(notification_topic, (form, course_date), mail_type='notification')
 
-        confirm_mail.send()  # TODO mail validation?
-        notification__mail.send()
+        #confirm_mail.send()  # TODO mail validation?
+        #notification_mail.send()
 
         flash('Dziękujemy! Zapisałeś się na kurs.', 'success')
 

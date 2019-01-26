@@ -5,7 +5,7 @@ class Students(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
     surname = db.Column(db.String(64), nullable=False)
-    phone = db.Column(db.Integer, nullable=False)
+    phone = db.Column(db.String(15), nullable=False)
     email = db.Column(db.String(64), nullable=False)
     address = db.Column(db.String(128), nullable=True)
     age = db.Column(db.String(4), nullable=True)

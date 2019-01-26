@@ -1,11 +1,4 @@
-import datetime
-
-from flask import render_template
-from app import mail
-from flask_mail import Message
-from app.forms.signUpForm import SignUpForm
-# database
-from app.resources.CoursesResource import get_current_course
+import re
 
 
 class Student:
@@ -32,9 +25,9 @@ class Student:
             if not value or value == 0:
                 if field in fields - address_fields:
                     student_data[field] = 'brak'
-                else:
+                elif field in address_fields:
                     student_data['address'] = 'brak'
-            elif field in fields - address_fields:
+            elif value and field in fields - address_fields:
                 student_data[field] = value
 
         if student_data['address'] is None:
@@ -42,5 +35,7 @@ class Student:
                 self.signup_form.street.data + ', ' \
                 + self.signup_form.postal.data + ' ' \
                 + self.signup_form.city.data
+
+        student_data['phone'] = re.sub("[^0-9|+]", "", student_data['phone'])  # remove all non-numeric characters
 
         return student_data
