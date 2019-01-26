@@ -36,7 +36,7 @@ def pricing():
 
 @mainSite.route('/zapisz-sie-na-kurs', methods=['POST', 'GET'])
 def sign_up():
-    form = SignUpForm(courseId='21').update_form()
+    form = SignUpForm().update_form()
     # See update_form method in SignUpForm class for explanation
 
     four_closest_courses = get_four_future_courses()

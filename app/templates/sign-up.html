@@ -44,10 +44,6 @@
 
                     <form method="post" action="" id="sign-up-form" novalidate>
                         {{ form.hidden_tag() }}
-                    {% if form.courseId.errors %}
-                                    {% for error in form.courseId.errors %}
-                    {% endfor %}
-                    {% endif %}
                         {% if not courses %}
                             <div class="container sorry-no-courses">
                                 <h4 class="center-align"><span class="blue-text text-darken-3">Przepraszamy!</span> Obecnie&nbsp;żaden kurs nie&nbsp;jest&nbsp;planowany. Wróć&nbsp;do&nbsp;nas za kilka dni.</h4>
