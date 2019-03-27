@@ -92,3 +92,11 @@ def validate_student_limit(course_id):
         return False
     else:
         return True
+
+
+def reformat_prices(all_prices):
+    reformatted_prices = {}
+    for price in all_prices:
+        reformatted_prices[price.name] = price.price
+
+    return reformatted_prices

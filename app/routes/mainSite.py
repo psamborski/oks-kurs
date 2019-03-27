@@ -5,9 +5,10 @@ from app.forms.contactForm import ContactForm
 from app.forms.signUpForm import SignUpForm
 from app.models.MailModel import Mail
 from app.models.StudentModel import Student
-from app.models.functions import reformat_date, reformat_course, validate_student_limit
+from app.models.functions import reformat_date, reformat_course, validate_student_limit, reformat_prices
 # database
 from app.resources.CoursesResource import get_current_course, get_four_future_courses, get_course_by_id
+from app.resources.PricesResource import get_all_prices
 from app.resources.StudentsResource import Students
 
 mainSite = Blueprint('mainSite', __name__)
@@ -26,12 +27,13 @@ def about():
 @mainSite.route('/cennik')
 def pricing():
     course = get_current_course()
+    all_prices = reformat_prices(get_all_prices())
     if course is None:
-        price = '1400'
+        price = None
     else:
         price = course.cost
 
-    return render_template('pricing.html', current_price=price)
+    return render_template('pricing.html', current_price=price, prices=all_prices)
 
 
 @mainSite.route('/zapisz-sie-na-kurs', methods=['POST', 'GET'])

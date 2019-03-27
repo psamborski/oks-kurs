@@ -20,6 +20,13 @@
     margin: 1em 0;
 }
 
+form legend {
+    color: #1565c0;
+    padding: 0 0.75rem;
+    font-weight: 400;
+    margin-top: 1em;
+}
+
 
 /* LOGIN FORM */
 .login-form-container {

@@ -16,7 +16,7 @@
 									<div>KURS <span class="yellow-text text-darken-2">KAT. B</span></div><span class="material-icons noselect">info_outline</span>
 								</div>
 								<div class="blue darken-3 service-price white-text">
-									<span class="dot">{{ current_price }} zł</span>
+									<span class="dot">{% if current_price %}{{ current_price }}{% else %}{{ prices.course_price }}{% endif %} zł</span>
 								</div>								
 							</div>
 							
@@ -62,7 +62,7 @@
 									<div>JAZDA DOSZKALAJĄCA <span class="yellow-text text-darken-2">1H</span></div>
 								</div>
 								<div class="blue darken-2 service-price white-text">
-									<span class="double-dot">40/45 zł</span>
+									<span class="double-dot">{{ prices.driving_lesson_kurs }}/{{ prices.driving_lesson_stranger }} zł</span>
 								</div>								
 							</div>
 						</li>
@@ -77,9 +77,9 @@
 									</div>
 								</div>
 								<div class="blue darken-3 service-price white-text price-flex-column">
-									<span>380/430 zł</span>
-									<span>740/840 zł</span>
-									<span>1080/1230 zł</span>
+									<span>{{ prices.driving_lesson_10_kurs }}/{{ prices.driving_lesson_10_stranger }} zł</span>
+									<span>{{ prices.driving_lesson_20_kurs }}/{{ prices.driving_lesson_20_stranger }} zł</span>
+									<span>{{ prices.driving_lesson_30_kurs }}/{{ prices.driving_lesson_30_stranger }} zł</span>
 								</div>								
 							</div>
 						</li>

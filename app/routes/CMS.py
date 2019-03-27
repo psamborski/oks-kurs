@@ -7,9 +7,11 @@ from app import db, bcrypt
 from app.forms.courseForm import CourseForm
 # database
 from app.forms.loginForm import LoginForm
+from app.forms.pricesForm import PricesForm
 from app.forms.userForm import UserForm
 from app.models.MailModel import Mail
 from app.models.functions import reformat_date, reformat_course
+from app.resources.PricesResource import get_all_prices
 from app.resources.StudentsResource import get_students_by_course, delete_students_by_course
 from app.resources.CoursesResource import Courses, get_course_by_id, get_current_course, get_all_courses
 from app.resources.UsersResource import get_user
@@ -80,6 +82,45 @@ def settings():
         form.email.data = user.email
 
     return render_template('cms/settings.html', form=form, user=user)
+
+
+@CMS.route('/admin/cennik', methods=['POST', 'GET'])
+@login_required
+def prices():
+    form = PricesForm()
+    all_prices = get_all_prices()
+
+    if request.method == 'POST' and form.validate_on_submit():
+        # user.email = form.email.data
+        for price in all_prices:
+            # get value for specific price
+            value = getattr(form, price.name)
+            price.price = value.data
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
+            mail = Mail('Błąd - OSK Kurs', 'Błąd przy zmienie cennika: ' + str(e),
+                        'psambek@gmail.com')
+            mail.send()
+
+            return render_template('cms/prices.html', form=form)
+
+        flash(f'Zaktualizowano cennik.', 'success')
+
+    elif request.method == 'POST' and not form.validate_on_submit():
+        flash('Cennik nie został uzupełniony poprawnie.', 'warning')
+
+    elif request.method == 'GET':
+        for price in all_prices:
+            current_input = getattr(form, price.name)
+            current_input.data = price.price
+            setattr(form, price.name, current_input)
+
+        print(form.course_price.data)
+
+    return render_template('cms/prices.html', form=form)
 
 
 @CMS.route('/admin/kursy')

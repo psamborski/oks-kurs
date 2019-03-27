@@ -1,0 +1,168 @@
+{% extends "cms/cms-base.html" %}
+
+{% block title %}Aktualizuj cennik{% endblock %}
+
+{% block content %}
+	<section>
+		<div class="container section-container">
+			<div class="row">
+				<div class="col s12">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            <div class="flash-messages">
+                               {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">
+                                        {% if category=='warning' %}
+                                            <span class="fas fa-exclamation-triangle"></span>
+                                        {% elif category=='success' %}
+                                            <span class="fas fa-check-circle"></span>
+                                        {% endif %}
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+
+            <h3 class="black-text section-header">
+                Cennik
+            </h3>
+
+			<div class="row">
+				<div class="col s12 white">
+					<form method="post" action="" id="add-course-form" novalidate>
+                        {{ form.hidden_tag() }}
+						<fieldset>
+                            <legend>Domyślna cena kursu (wyświetlana, gdy nie jest zaplanowany żaden kurs)</legend>
+							<div class="input-field col s12">
+                                    {{ form.course_price() }}
+                                    {{ form.course_price.label(class="active") }}
+                                {% if form.course_price.errors %}
+                                    {% for error in form.course_price.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+							</div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Lekcja doszkalająca</legend>
+							<div class="input-field col s12 m6">
+                                    {{ form.driving_lesson_kurs() }}
+                                    {{ form.driving_lesson_kurs.label(class="active") }}
+                                {% if form.driving_lesson_kurs.errors %}
+                                    {% for error in form.driving_lesson_kurs.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+							</div>
+							<div class="input-field col s12 m6">
+                                    {{ form.driving_lesson_stranger() }}
+                                    {{ form.driving_lesson_stranger.label(class="active") }}
+                                {% if form.driving_lesson_stranger.errors %}
+                                    {% for error in form.driving_lesson_stranger.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+							</div>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Pakiet jazd</legend>
+							<div class="input-field col s12 m6">
+                                    {{ form.driving_lesson_10_kurs() }}
+                                    {{ form.driving_lesson_10_kurs.label(class="active") }}
+                                {% if form.driving_lesson_10_kurs.errors %}
+                                    {% for error in form.driving_lesson_10_kurs.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+							</div>
+							<div class="input-field col s12 m6">
+                                    {{ form.driving_lesson_10_stranger() }}
+                                    {{ form.driving_lesson_10_stranger.label(class="active") }}
+                                {% if form.driving_lesson_10_stranger.errors %}
+                                    {% for error in form.driving_lesson_10_stranger.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+							</div>
+							<div class="input-field col s12 m6">
+                                    {{ form.driving_lesson_20_kurs() }}
+                                    {{ form.driving_lesson_20_kurs.label(class="active") }}
+                                {% if form.driving_lesson_20_kurs.errors %}
+                                    {% for error in form.driving_lesson_20_kurs.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+							</div>
+							<div class="input-field col s12 m6">
+                                    {{ form.driving_lesson_20_stranger() }}
+                                    {{ form.driving_lesson_20_stranger.label(class="active") }}
+                                {% if form.driving_lesson_20_stranger.errors %}
+                                    {% for error in form.driving_lesson_20_stranger.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+							</div>
+							<div class="input-field col s12 m6">
+                                    {{ form.driving_lesson_30_kurs() }}
+                                    {{ form.driving_lesson_30_kurs.label(class="active") }}
+                                {% if form.driving_lesson_30_kurs.errors %}
+                                    {% for error in form.driving_lesson_30_kurs.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+							</div>
+							<div class="input-field col s12 m6">
+                                    {{ form.driving_lesson_30_stranger() }}
+                                    {{ form.driving_lesson_30_stranger.label(class="active") }}
+                                {% if form.driving_lesson_30_stranger.errors %}
+                                    {% for error in form.driving_lesson_30_stranger.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+							</div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="col s12">
+                                <button type="submit" class="waves-effect waves-light btn blue darken-3">
+                                    AKTUALIZUJ
+                                </button>
+                            </div>
+                        </fieldset>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
