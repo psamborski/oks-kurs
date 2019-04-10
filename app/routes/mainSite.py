@@ -8,6 +8,7 @@ from app.models.StudentModel import Student
 from app.models.functions import reformat_date, reformat_course, validate_student_limit, reformat_prices
 # database
 from app.resources.CoursesResource import get_current_course, get_four_future_courses, get_course_by_id
+from app.resources.GalleryResource import get_all_photos
 from app.resources.PricesResource import get_all_prices
 from app.resources.StudentsResource import Students
 
@@ -21,7 +22,9 @@ def index():
 
 @mainSite.route('/o-nas')
 def about():
-    return render_template('about.html')
+    gallery = get_all_photos()
+
+    return render_template('about.html', gallery=gallery)
 
 
 @mainSite.route('/cennik')

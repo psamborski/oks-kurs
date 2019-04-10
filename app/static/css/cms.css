@@ -204,3 +204,15 @@ form legend {
 .students-table-box table th, .students-table-box table td {
     padding: 15px 12px;
 }
+
+/* GALLERY */
+.photo-row {
+    width: 100%;
+    padding: 2em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.photo-row img {
+    height: 180px;
+}

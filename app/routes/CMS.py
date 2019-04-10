@@ -6,11 +6,13 @@ import pdfkit
 from app import db, bcrypt
 from app.forms.courseForm import CourseForm
 # database
+from app.forms.galleryForm import GalleryForm
 from app.forms.loginForm import LoginForm
 from app.forms.pricesForm import PricesForm
 from app.forms.userForm import UserForm
 from app.models.MailModel import Mail
-from app.models.functions import reformat_date, reformat_course
+from app.models.functions import reformat_date, reformat_course, save_picture, get_photo_title, scale_photo
+from app.resources.GalleryResource import get_all_photos, Gallery
 from app.resources.PricesResource import get_all_prices
 from app.resources.StudentsResource import get_students_by_course, delete_students_by_course
 from app.resources.CoursesResource import Courses, get_course_by_id, get_current_course, get_all_courses
@@ -121,6 +123,50 @@ def prices():
         print(form.course_price.data)
 
     return render_template('cms/prices.html', form=form)
+
+
+@CMS.route('/admin/galeria', methods=['POST', 'GET'])
+@login_required
+def gallery():
+    form = GalleryForm()
+
+    if request.method == 'POST' and form.validate_on_submit():
+        form_photos = form.photos.data
+
+        for photo in form_photos:
+            filename = photo.filename
+            picture_name = get_photo_title(photo)
+            if form.scale.data:
+                photo = scale_photo(photo)
+            save_picture(photo, picture_name)
+            photo_to_gallery = Gallery(
+                title=filename,
+                src=picture_name
+            )
+
+            db.session.add(photo_to_gallery)
+
+        try:
+            db.session.commit()
+        except Exception as e:
+            flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
+            mail = Mail('Błąd - OSK Kurs', 'Błąd przy aktualizacji galerii: ' + str(e),
+                        'psambek@gmail.com')
+            mail.send()
+
+            return render_template('cms/photos.html', form=form, photos=current_gallery)
+
+        flash(f'Zaktualizowano galerię.', 'success')
+
+    elif request.method == 'POST' and not form.validate_on_submit():
+        flash('Wczytane pliki mają niepoprawny format.', 'warning')
+
+    current_gallery = get_all_photos()
+
+    return render_template('cms/photos.html',
+                           form=form,
+                           photos=current_gallery
+                           )
 
 
 @CMS.route('/admin/kursy')
