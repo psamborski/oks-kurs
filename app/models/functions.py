@@ -180,3 +180,8 @@ def scale_photo(picture):
         pil_background.paste(pil_foreground, (int(final_difference/2), 0), pil_foreground)
 
     return pil_background
+
+
+def delete_photo(photo_src):
+    picture_path = os.path.join(app.root_path, 'static/images/gallery', photo_src)
+    os.remove(picture_path)

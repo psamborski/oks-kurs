@@ -162,6 +162,26 @@
 			</div>
 		</div>
 	</section>
+
+    <!-- Modal Structure -->
+    {% if pop_up %}
+        <div id="index-popup" class="modal">
+            <button class="modal-close btn-flat" style="position:absolute;top:0;right:0;">X</button>
+            <div class="modal-content">
+                <h4>{{ pop_up.header }}</h4>
+                <p>{{ pop_up.body }}</p>
+
+                {% if pop_up.photo %}
+                    <div style="width: 100%; text-align: center;">
+                        <img src="{{ pop_up.photo }}" alt="Pop up - foto" style="max-width: 470px; width: 100%; margin: 0 auto;" />
+                    </div>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <a href="{{ url_for('mainSite.sign_up') }}" class="modal-close btn waves-effect blue darken-2 white-text">Zapisz się na kurs</a>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block additionalScript %}<script src="{{ url_for('static', filename='js/index.js') }}"></script>{% endblock %}

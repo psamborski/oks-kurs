@@ -14,6 +14,8 @@
                                     <div class="alert alert-{{ category }}">
                                         {% if category=='warning' %}
                                             <span class="fas fa-exclamation-triangle"></span>
+                                        {% elif category=='error' %}
+                                            <span class="fas fa-exclamation-circle"></span>
                                         {% elif category=='success' %}
                                             <span class="fas fa-check-circle"></span>
                                         {% endif %}
@@ -32,44 +34,37 @@
 
 			<div class="row">
 				<div class="col s12 white">
-                    {% for photo in photos %}
-                        <div class="photo-row">
-                            <img src="{{ url_for('static', filename='images/gallery/' + photo.src) }}" alt="{{ photo.title }}" title="{{ photo.title }}" />
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-			<div class="row">
-				<div class="col s12 white">
-					<form method="post" action="" id="add-course-form" enctype="multipart/form-data" novalidate>
-                        {{ form.hidden_tag() }}
+					<form method="post" action="" id="add-photos-form" enctype="multipart/form-data" novalidate>
+                        {{ add_form.hidden_tag() }}
 						<fieldset>
                             <div class="file-field input-field col s12">
                                 <div class="waves-effect waves-light btn blue darken-3">
-                                    <span>{{ form.photos.label(class="white-text") }}</span>
-                                    {{ form.photos() }}
+                                    <span>{{ add_form.photos.label(class="white-text") }}</span>
+                                    {{ add_form.photos() }}
                                 </div>
                                 <div class="file-path-wrapper">
                                     <input class="file-path validate" type="text" placeholder="Wybierz jedno lub więcej zdjęć">
                                 </div>
-                                {% if form.photos.errors %}
-                                    {% for error in form.photos.errors %}
+                                {% if add_form.photos.errors %}
+                                    {% for error in add_form.photos.errors %}
                                         <div class="alert-message">
                                             <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
                                             <span class="helper-text red-text text-darken-2">{{ error }}</span>
                                         </div>
-                                        {% endfor %}
+                                    {% endfor %}
                                 {% endif %}
                             </div>
 							<div class="col s12">
                                     <p>
                                         <label>
-                                            {{ form.scale() }}
-                                            <span>{{ form.scale.label }}</span>
+                                            {{ add_form.scale() }}
+                                            <span>{{ add_form.scale.label }}</span>
                                         </label>
                                     </p>
 							</div>
                         </fieldset>
+
+                        <input type="hidden" value="add" name="type" />
 
                         <fieldset>
                             <div class="col s12">
@@ -82,6 +77,75 @@
 					</form>
 				</div>
 			</div>
+
+            {# UPDATE FORM #}
+
+			<div class="row">
+				<div class="col s12 white">
+					<form method="post" action="" id="update-photos-form" novalidate>
+                        {{ update_form.hidden_tag() }}
+                        <fieldset>
+                            {% for photo_field in update_form.photos %}
+                                {{ photo_field.hidden_tag() }}
+                                <div class="photo-row row">
+                                    <div class="col s12 m3">
+                                        <img src="{{ url_for('static', filename='images/gallery/' + photo_field.src.data) }}" alt="{{ photo_field.title.data }}" title="{{ photo_field.title.data }}" />
+                                    </div>
+                                    <div class="col s12 m6">
+                                        <div class="input-field col s12">
+                                            {{ photo_field.title() }}
+                                            {{ photo_field.title.label(class="active") }}
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <input type="text" id="photo-{{ loop.index0 }}-source" value="http://osk-kurs.pl{{ url_for('static', filename='images/gallery/' + photo_field.src.data) }}" readonly/>
+                                            <label for="photo-{{ loop.index0 }}-source" class="active">Link do zdjęcia</label>
+                                        </div>
+                                    </div>
+                                    <div class="input-field col s8 m2">
+                                        {{ photo_field.order() }}
+                                        {{ photo_field.order.label(class="active") }}
+                                    </div>
+                                    <div class="input-field col s4 m1 right">
+                                        <a href="#delete-{{ photo_field.photo_id.data }}-modal" class="modal-trigger">
+                                            <span class="waves-effect btn-flat white-text red darken-3">USUŃ</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </fieldset>
+
+                        <input type="hidden" value="update" name="type" />
+
+                        <fieldset>
+                            <div class="col s12">
+                                <button type="submit" class="waves-effect waves-light btn blue darken-3">
+                                    AKTUALIZUJ
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
 		</div>
 	</section>
+
+    {# DELETE BUTTON MODALS #}
+
+    {% for photo_field in update_form.photos %}
+        <div id="delete-{{ photo_field.photo_id.data }}-modal" class="modal">
+            <div class="modal-content">
+                <h5>Czy na pewno chcesz usunąć to zdjęcie ({{ photo_field.title.data }})?</h5>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close waves-effect btn-flat">ANULUJ</button>
+                <form action="{{ url_for('CMS.delete_photo_from_gallery', photo_id=photo_field.photo_id.data) }}" method="POST" class="right">
+                    <button type="submit" class="waves-effect btn-flat red darken-3 white-text">USUŃ</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+
 {% endblock %}
+
+{% block additionalScript %}<script src="{{ url_for('static', filename='js/gallery.js') }}"></script>{% endblock %}

@@ -5,14 +5,19 @@ import pdfkit
 
 from app import db, bcrypt
 from app.forms.courseForm import CourseForm
-# database
-from app.forms.galleryForm import GalleryForm
+from app.forms.galleryAddForm import GalleryAddForm
+from app.forms.galleryUpdateForm import GalleryUpdateForm
 from app.forms.loginForm import LoginForm
+from app.forms.popUpForm import PopUpForm
 from app.forms.pricesForm import PricesForm
 from app.forms.userForm import UserForm
+
 from app.models.MailModel import Mail
-from app.models.functions import reformat_date, reformat_course, save_picture, get_photo_title, scale_photo
-from app.resources.GalleryResource import get_all_photos, Gallery
+from app.models.functions import reformat_date, reformat_course, save_picture, get_photo_title, scale_photo, \
+    delete_photo
+
+from app.resources.GalleryResource import get_all_photos, Gallery, get_photo_by_id
+from app.resources.PopUpResource import get_pop_up
 from app.resources.PricesResource import get_all_prices
 from app.resources.StudentsResource import get_students_by_course, delete_students_by_course
 from app.resources.CoursesResource import Courses, get_course_by_id, get_current_course, get_all_courses
@@ -120,53 +125,189 @@ def prices():
             current_input.data = price.price
             setattr(form, price.name, current_input)
 
-        print(form.course_price.data)
-
     return render_template('cms/prices.html', form=form)
 
 
-@CMS.route('/admin/galeria', methods=['POST', 'GET'])
+@CMS.route('/admin/popup', methods=['POST', 'GET'])
 @login_required
-def gallery():
-    form = GalleryForm()
+def popup():
+    form = PopUpForm()
+    pop_up = get_pop_up()
 
     if request.method == 'POST' and form.validate_on_submit():
-        form_photos = form.photos.data
-
-        for photo in form_photos:
-            filename = photo.filename
-            picture_name = get_photo_title(photo)
-            if form.scale.data:
-                photo = scale_photo(photo)
-            save_picture(photo, picture_name)
-            photo_to_gallery = Gallery(
-                title=filename,
-                src=picture_name
-            )
-
-            db.session.add(photo_to_gallery)
+        pop_up.header = form.header.data
+        pop_up.body = form.body.data
+        pop_up.photo = form.photo.data
+        pop_up.show = 1 if form.show.data else 0
 
         try:
             db.session.commit()
         except Exception as e:
             flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
-            mail = Mail('Błąd - OSK Kurs', 'Błąd przy aktualizacji galerii: ' + str(e),
+            mail = Mail('Błąd - OSK Kurs', 'Błąd przy zmienie pop upa: ' + str(e),
                         'psambek@gmail.com')
             mail.send()
 
-            return render_template('cms/photos.html', form=form, photos=current_gallery)
+            return render_template('cms/popup.html', form=form)
 
-        flash(f'Zaktualizowano galerię.', 'success')
+        flash(f'Zaktualizowano pop up.', 'success')
 
     elif request.method == 'POST' and not form.validate_on_submit():
-        flash('Wczytane pliki mają niepoprawny format.', 'warning')
+        flash('Pop up nie został uzupełniony poprawnie.', 'warning')
 
+    elif request.method == 'GET':
+        form.header.data = pop_up.header
+        form.body.data = pop_up.body
+        form.photo.data = pop_up.photo
+        form.show.data = pop_up.show
+
+    return render_template('cms/popup.html', form=form)
+
+
+@CMS.route('/admin/galeria', methods=['POST', 'GET'])
+@login_required
+def gallery():
+    # get add photos form
+    add_form = GalleryAddForm()
+
+    # get update form
     current_gallery = get_all_photos()
 
+    current_photos = []
+
+    # get current gallery and reformat it
+    for photo in current_gallery:
+        current_photos.append(
+            {
+                "title": photo.title,
+                "order": photo.order,
+                "src": photo.src,
+                "photo_id": photo.id
+            }
+        )
+
+    update_form = GalleryUpdateForm(photos=current_photos)
+    # finish getting
+
+    if request.method == 'POST':
+        # ADD PHOTOS form
+        if request.form["type"] == 'add' and add_form.validate_on_submit():
+            # if form is ok
+            form_photos = request.files.getlist(add_form.photos.name)
+
+            if form_photos:
+                # double check if there are any photos
+
+                for photo in form_photos:
+                    filename = photo.filename
+                    picture_name = get_photo_title(photo)
+
+                    if add_form.scale.data:
+                        # if scaling option is checked, scale
+                        photo = scale_photo(photo)
+
+                    save_picture(photo, picture_name)
+
+                    photo_to_gallery = Gallery(
+                        title=filename,
+                        src=picture_name
+                    )
+
+                    db.session.add(photo_to_gallery)
+
+                try:
+                    db.session.commit()
+                    flash('Zaktualizowano galerię.', 'success')
+
+                    # the only way to deal with strange error in creating empty update form after add request
+                    # it also makes refresh not triggering window with asking for uploading form again
+                    return redirect(url_for('CMS.gallery'))
+
+                except Exception as e:
+                    flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
+                    mail = Mail('Błąd - OSK Kurs', 'Błąd przy aktualizacji galerii: ' + str(e),
+                                'psambek@gmail.com')
+
+                    mail.send()
+
+                    return render_template('cms/photos.html',
+                                           add_form=add_form,
+                                           update_form=update_form,
+                                           photos=current_gallery
+                                           )
+
+            else:
+                # if there's not any photo
+                flash('Wczytane pliki mają niepoprawny format lub nie wybrano żadnych zdjęć.', 'warning')
+
+                # the only way to deal with strange error in creating empty update form after add request
+                # it also makes refresh not triggering window with asking for uploading form again
+                return redirect(url_for('CMS.gallery'))
+
+        elif request.form["type"] == 'add' and not add_form.validate_on_submit():
+            # if add form doesn't validate
+            flash('Wczytane pliki mają niepoprawny format lub nie wybrano żadnych zdjęć.', 'warning')
+
+        # UPDATE PHOTOS form
+        if request.form["type"] == 'update' and update_form.validate_on_submit():
+            try:
+
+                for gallery_object, form_photo in zip(current_gallery, update_form.photos):
+                    gallery_object.title = form_photo.title.data
+                    gallery_object.order = form_photo.order.data
+
+                db.session.commit()
+
+            except Exception as e:
+                flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
+                mail = Mail('Błąd - OSK Kurs', 'Błąd przy aktualizacji galerii: ' + str(e),
+                            'psambek@gmail.com')
+
+                mail.send()
+
+                return render_template('cms/photos.html',
+                                       add_form=add_form,
+                                       update_form=update_form,
+                                       photos=current_gallery
+                                       )
+
+            flash('Zaktualizowano galerię.', 'success')
+
+        elif request.form["type"] == 'update' and not update_form.validate_on_submit():
+            # if update form doesn't validate
+            flash('Wprowadzone dane są niepoprawne.', 'warning')
+
     return render_template('cms/photos.html',
-                           form=form,
+                           add_form=add_form,
+                           update_form=update_form,
                            photos=current_gallery
                            )
+
+
+@CMS.route("/admin/galeria/<int:photo_id>/usun", methods=['POST'])
+@login_required
+def delete_photo_from_gallery(photo_id):
+    photo = get_photo_by_id(photo_id)
+
+    try:
+        db.session.delete(photo)
+        db.session.commit()
+
+        delete_photo(photo.src)
+    except Exception as e:
+        flash('Przepraszamy! Wystąpił nieoczekiwany błąd.', 'error')
+        mail = Mail('Błąd - OSK Kurs', 'Błąd przy usuwaniu kursu: ' + str(e),
+                    'psambek@gmail.com')
+        mail.send()
+
+        return redirect(url_for('CMS.gallery'))
+
+    # deleting multiple rows can be quicker with engine
+    # https://stackoverflow.com/questions/39773560/sqlalchemy-how-do-you-delete-multiple-rows-without-querying
+    # https: // docs.sqlalchemy.org / en / latest / core / connections.html
+
+    flash('Zdjęcie zostało usunięte.', 'success')
+    return redirect(url_for('CMS.gallery'))
 
 
 @CMS.route('/admin/kursy')

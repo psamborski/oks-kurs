@@ -7,6 +7,11 @@
 		fullWidth: true,
 		indicators: true
 	});
+
+	$(document).ready(function(){
+		$('.modal').modal();
+		$('.modal').modal('open');
+	});
 	
 	// function for next slide
 	$('.carousel-next').click(function(){

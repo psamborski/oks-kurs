@@ -37,8 +37,8 @@
 						<fieldset>
                             <legend>Domyślna cena kursu (wyświetlana, gdy nie jest zaplanowany żaden kurs)</legend>
 							<div class="input-field col s12">
-                                    {{ form.course_price() }}
-                                    {{ form.course_price.label(class="active") }}
+                                {{ form.course_price() }}
+                                {{ form.course_price.label(class="active") }}
                                 {% if form.course_price.errors %}
                                     {% for error in form.course_price.errors %}
                                         <div class="alert-message">

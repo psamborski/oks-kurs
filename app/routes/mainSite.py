@@ -9,6 +9,7 @@ from app.models.functions import reformat_date, reformat_course, validate_studen
 # database
 from app.resources.CoursesResource import get_current_course, get_four_future_courses, get_course_by_id
 from app.resources.GalleryResource import get_all_photos
+from app.resources.PopUpResource import get_pop_up
 from app.resources.PricesResource import get_all_prices
 from app.resources.StudentsResource import Students
 
@@ -17,7 +18,10 @@ mainSite = Blueprint('mainSite', __name__)
 
 @mainSite.route('/')
 def index():
-    return render_template('index.html')
+    pop_up = get_pop_up()
+    if not pop_up.show:
+        pop_up = None
+    return render_template('index.html', pop_up=pop_up)
 
 
 @mainSite.route('/o-nas')
