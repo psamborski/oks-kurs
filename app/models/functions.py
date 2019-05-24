@@ -129,7 +129,7 @@ def scale_photo(picture):
     width, height = pil_picture.size
 
     # scale back properly // pil_background.thumbnail(size, Image.ANTIALIAS) - problem with small pictures
-    if width > height:
+    if width / height > 1.685:  # 1164/689
         bratio = 698/height
         fratio = 1154/width
         back_size = int(width*bratio), 689
@@ -144,7 +144,7 @@ def scale_photo(picture):
 
     # crop back properly
     back_width, back_height = pil_background.size
-    if width > height:
+    if width / height > 1.685:
         difference = back_width - 1154  # get difference between target size and current size
         pil_background = pil_background.crop((int(difference/2), 0, int(back_width-difference/2), back_height))
     else:
@@ -172,7 +172,7 @@ def scale_photo(picture):
 
     # merge fore and background
     final_width, final_height = pil_foreground.size
-    if width > height:
+    if width / height > 1.685:
         final_difference = 689 - final_height
         pil_background.paste(pil_foreground, (0, int(final_difference/2)), pil_foreground)
     else:

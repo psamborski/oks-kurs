@@ -19,7 +19,11 @@ mainSite = Blueprint('mainSite', __name__)
 @mainSite.route('/')
 def index():
     pop_up = get_pop_up()
-    if not pop_up.show:
+
+    if not pop_up:
+        pop_up = None
+
+    if pop_up and not pop_up.show:
         pop_up = None
     return render_template('index.html', pop_up=pop_up)
 
