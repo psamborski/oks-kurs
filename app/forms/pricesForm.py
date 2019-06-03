@@ -34,7 +34,7 @@ class PricesForm(FlaskForm):
                             DataRequired(message='Wprowadzona cena nie jest poprawna.'),
                             NumberRange(min=0, message='Podana wartość nie jest liczbą')
                         ])
-    driving_lesson_20_stranger = IntegerField(label='Pakiet 20 godzin jazd (OSK Kurs)',
+    driving_lesson_20_stranger = IntegerField(label='Pakiet 20 godzin jazd (osoba z zewnątrz)',
                         validators=[
                             DataRequired(message='Wprowadzona cena nie jest poprawna.'),
                             NumberRange(min=0, message='Podana wartość nie jest liczbą')
@@ -44,7 +44,7 @@ class PricesForm(FlaskForm):
                             DataRequired(message='Wprowadzona cena nie jest poprawna.'),
                             NumberRange(min=0, message='Podana wartość nie jest liczbą')
                         ])
-    driving_lesson_30_stranger = IntegerField(label='Pakiet 30 godzin jazd (OSK Kurs)',
+    driving_lesson_30_stranger = IntegerField(label='Pakiet 30 godzin jazd (osoba z zewnątrz)',
                         validators=[
                             DataRequired(message='Wprowadzona cena nie jest poprawna.'),
                             NumberRange(min=0, message='Podana wartość nie jest liczbą')
