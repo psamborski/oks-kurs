@@ -8,9 +8,10 @@ class Users(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False)
     passwordHash = db.Column(db.String(240), nullable=False)
     email = db.Column(db.String(50), nullable=True)
+    bank_account = db.Column(db.String(80), nullable=False)
 
     def __repr__(self):
-        return f"Student('{self.username}', '{self.email}')"
+        return f"User('{self.username}', '{self.email}')"
 
 
 def get_user(username='admin-kurs'):

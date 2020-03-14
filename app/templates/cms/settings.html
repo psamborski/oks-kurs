@@ -48,6 +48,22 @@
                                     {{ form.email.label() }}
                                 {% endif %}
 							</div>
+
+							<div class="input-field col s12">
+                                {% if form.bank_account.errors %}
+                                    {{ form.bank_account() }}
+                                    {{ form.bank_account.label() }}
+                                    {% for error in form.bank_account.errors %}
+                                        <div class="alert-message">
+                                            <span class="fas fa-exclamation-circle red-text text-darken-2"></span>
+                                            <span class="helper-text red-text text-darken-2">{{ error }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.bank_account() }}
+                                    {{ form.bank_account.label() }}
+                                {% endif %}
+							</div>
 							
 							<div class="col s12">
 								<button type="submit" class="waves-effect waves-light btn blue darken-3">

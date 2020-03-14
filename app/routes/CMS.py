@@ -70,6 +70,7 @@ def settings():
 
     if request.method == 'POST' and form.validate_on_submit():
         user.email = form.email.data
+        user.bank_account = form.bank_account.data
         try:
             db.session.commit()
         except Exception as e:
@@ -83,10 +84,11 @@ def settings():
         flash(f'Zaktualizowano adres e-mail.', 'success')
 
     elif request.method == 'POST' and not form.validate_on_submit():
-        flash('Niepoprawny adres e-mail.', 'warning')
+        flash('Niepoprawnie wypełniony formularz.', 'warning')
 
     elif request.method == 'GET':
         form.email.data = user.email
+        form.bank_account.data = user.bank_account
 
     return render_template('cms/settings.html', form=form, user=user)
 
