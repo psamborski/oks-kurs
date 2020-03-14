@@ -1,5 +1,4 @@
 from flask import Blueprint, request, flash, render_template, redirect, url_for
-from flask_login import current_user
 
 from app import db
 from app.forms.contactForm import ContactForm
@@ -13,7 +12,7 @@ from app.resources.GalleryResource import get_all_photos
 from app.resources.PopUpResource import get_pop_up
 from app.resources.PricesResource import get_all_prices
 from app.resources.StudentsResource import Students
-from app.resources.UsersResource import get_user
+from app.resources.UsersResource import get_bank_account
 
 mainSite = Blueprint('mainSite', __name__)
 
@@ -37,7 +36,7 @@ def about():
 def pricing():
     course = get_current_course()
     all_prices = reformat_prices(get_all_prices())
-    user = get_user(current_user.username)
+    bank_account = get_bank_account()
 
     if course is None:
         price = None
@@ -47,7 +46,7 @@ def pricing():
     return render_template('pricing.html',
                            current_price=price,
                            prices=all_prices,
-                           bank_account=user.bank_account
+                           bank_account=bank_account
                            )
 
 
@@ -56,7 +55,7 @@ def sign_up():
     form = SignUpForm().update_form()
     # See update_form method in SignUpForm class for explanation
 
-    user = get_user(current_user.username)
+    bank_account = get_bank_account()
     four_closest_courses = get_four_future_courses()
     reformatted_courses = []
 
@@ -72,7 +71,7 @@ def sign_up():
             return render_template('sign-up.html',
                                    form=form,
                                    courses=reformatted_courses,
-                                   bank_account=user.bank_account
+                                   bank_account=bank_account
                                    )
 
         student_data = Student(form).handle_form()
@@ -92,7 +91,7 @@ def sign_up():
             return render_template('sign-up.html',
                                    form=form,
                                    courses=reformatted_courses,
-                                   bank_account=user.bank_account
+                                   bank_account=bank_account
                                    )
 
         confirm_topic = 'Potwierdzenie zgłoszenia'
@@ -116,7 +115,7 @@ def sign_up():
         return render_template('sign-up.html',
                                form=form,
                                courses=reformatted_courses,
-                               bank_account=user.bank_account
+                               bank_account=bank_account
                                )
 
     elif request.method == 'POST' and not form.validate_on_submit():
@@ -126,13 +125,13 @@ def sign_up():
         return render_template('sign-up.html',
                                form=form,
                                courses=reformatted_courses,
-                               bank_account=user.bank_account
+                               bank_account=bank_account
                                )
 
     return render_template('sign-up.html',
                            form=form,
                            courses=reformatted_courses,
-                           bank_account=user.bank_account
+                           bank_account=bank_account
                            )
 
 

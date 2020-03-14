@@ -30,6 +30,14 @@ def get_admin_mail():
     return email
 
 
+def get_bank_account():
+    user = get_user('admin-kurs')
+
+    bank_account = user.bank_account
+
+    return bank_account
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
