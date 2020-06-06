@@ -25,7 +25,7 @@ def get_current_course():
     """
     current_date = datetime.datetime.now().date()
     current_course = Courses.query. \
-        filter(Courses.startDate > current_date). \
+        filter(Courses.startDate >= current_date). \
         order_by(Courses.startDate.asc()). \
         first()
 
