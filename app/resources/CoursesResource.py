@@ -40,7 +40,7 @@ def get_four_future_courses():
 
     current_date = datetime.datetime.now().date()
     courses = Courses.query. \
-        filter(Courses.startDate > current_date). \
+        filter(Courses.startDate >= current_date). \
         order_by(Courses.startDate.asc()). \
         limit(4).\
         all()
